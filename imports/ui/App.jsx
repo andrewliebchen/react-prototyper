@@ -1,4 +1,11 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import CodeMirror from 'react-codemirror';
+
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/mode/jsx/jsx';
+import 'codemirror/theme/tomorrow-night-eighties.css';
+
 
 class App extends Component {
   constructor(props) {
@@ -20,15 +27,28 @@ class App extends Component {
     const { component } = this.state;
     return (
       <div className="App">
-        <textarea onChange={(event) => this.setState({code: event.target.value})}/>
-        <button onClick={this.handleSubmit.bind(this)}>Send</button>
-
-        <h3>Result:</h3>
-        {component && React.createElement(
-          component.type,
-          component.props,
-          component.props.children
-        )}
+        <div className="Wrapper">
+          <div className="Canvas">
+            {component && React.createElement(
+              component.type,
+              component.props,
+              component.props.children
+            )}
+          </div>
+          <div className="Editor">
+            <CodeMirror
+              value={this.state.code}
+              onChange={(value) => { this.setState({code: value}) }}
+              options={{
+                lineNumbers: true,
+                smartIndent: true,
+                autoFocus: true,
+                mode: 'jsx',
+                theme: 'tomorrow-night-eighties',
+              }}/>
+            <button onClick={this.handleSubmit.bind(this)}>Send</button>
+          </div>
+        </div>
       </div>
     );
   }

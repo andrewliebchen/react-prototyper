@@ -1,1 +1,38 @@
-/* CSS declarations go here */
+:root {
+  --width-content: 85em;
+
+  --color-background: #E9EBEE;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  line-height: 1.2;
+  background-color: #E9EBEE;
+}
+
+.Wrapper {
+  max-width: 85em;
+  margin: 0 auto;
+}
+
+.Canvas {
+  background-color: white;
+  height: 50vh;
+}
+
+.Editor {
+  height: 50vh;
+  /*background-color: #4B4F56;*/
+}
+
+.CodeMirror {
+  height: 50vh;
+}
