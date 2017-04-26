@@ -32,8 +32,33 @@ body {
 .Editors {
   background-color: black;
   padding: 1em;
-  height: 50vh;
-  overflow: auto;
+  min-height: 50vh;
+  color: white;
+}
+
+.ReactTabs__TabList {
+  list-style: none;
+  display: flex;
+  margin-bottom: 1em;
+}
+
+.ReactTabs__Tab {
+  flex: 0 0 auto;
+  margin-right: 2em;
+  display: inline-block;
+  color: #666;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+}
+
+.ReactTabs__Tab:hover {
+  color: #999;
+}
+
+.ReactTabs__Tab--selected,
+.ReactTabs__Tab--selected:hover {
+  color: white;
 }
 
 .Editor {

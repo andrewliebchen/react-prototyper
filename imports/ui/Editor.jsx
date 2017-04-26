@@ -19,27 +19,27 @@ class Editor extends Component {
   constructor(props) {
     super(props);
 
-    const { components } = this.props;
+    const { element } = this.props;
     this.state = {
-      jsx: this.props.component.jsx,
+      userCode: this.props.element.jsx, // Need to not be specific in the schema
     };
   }
 
   handleUpdate() {
     Meteor.call('updateComponent', {
-      id: this.props.component._id,
-      jsx: this.state.jsx,
+      id: this.props.element._id,
+      jsx: this.state.userCode,
       updatedAt: Date.now(),
     });
   }
 
   render() {
-    const { jsx } = this.state;
+    const { userCode } = this.state;
     return (
       <div className="Editor">
         <CodeMirror
-          value={jsx && jsx}
-          onChange={(value) => { this.setState({jsx: value}) }}
+          value={userCode && userCode}
+          onChange={(value) => { this.setState({userCode: value}) }}
           options={options}/>
         <ButtonOutline
           onClick={this.handleUpdate.bind(this)}
@@ -57,7 +57,7 @@ class Editor extends Component {
 }
 
 Editor.propTypes = {
-  component: PropTypes.object.isRequired,
+  element: PropTypes.object.isRequired,
 };
 
 export default Editor;
