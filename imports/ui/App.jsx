@@ -1,42 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { createContainer } from 'meteor/react-meteor-data';
+
+import { Components } from '../api/components';
 
 import Canvas from './Canvas';
 import Editor from './Editor';
 
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      code: null,
-      component: null,
-    };
-  }
+const App = (props) =>
+  <div className="App">
+    <div className="Wrapper">
+      <Canvas components={props.components}/>
+      <Editor components={props.components}/>
+    </div>
+  </div>
 
-  handleUpdate(value) {
-    this.setState({code: value});
-  }
-
-  handleSubmit() {
-    Meteor.call('returnReact', this.state.code, (error, component) => {
-      this.setState({component: component});
-    });
-  }
-
-  render() {
-    const { component } = this.state;
-    return (
-      <div className="App">
-        <div className="Wrapper">
-          <Canvas component={this.state.component}/>
-          <Editor
-            code={this.state.code}
-            handleUpdate={this.handleUpdate.bind(this)}
-            handleSubmit={this.handleSubmit.bind(this)}/>
-        </div>
-      </div>
-    );
-  }
+App.propTypes = {
+  components: PropTypes.array.isRequired,
 };
 
-export default App;
+export default createContainer(() => {
+  return {
+    components: Components.find({}).fetch(),
+  };
+}, App);

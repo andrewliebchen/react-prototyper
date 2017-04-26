@@ -37,3 +37,10 @@ body {
   height: 50vh !important;
   margin: 0 !important;
 }
+
+.Button {
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  padding: 0 1em;
+}

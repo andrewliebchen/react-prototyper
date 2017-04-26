@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import CodeMirror from 'react-codemirror';
 
 import 'codemirror/lib/codemirror.css';
@@ -13,21 +14,47 @@ options = {
   theme: 'tomorrow-night-eighties',
 };
 
-const Editor = (props) =>
-  <div className="Editor">
-    <CodeMirror
-      value={props.code}
-      onChange={(value) => { return props.handleUpdate(value) }}
-      options={options}/>
-    <button
-      onClick={props.handleSubmit}
-      style={{
-        position: 'absolute',
-        bottom: '1em',
-        right: '1em',
-      }}>
-      Send
-    </button>
-  </div>
+class Editor extends Component {
+  constructor(props) {
+    super(props);
+
+    const { components } = this.props;
+    this.state = {
+      jsx: null,
+    };
+  }
+
+  handleSubmit() {
+    Meteor.call('returnReact', {
+      jsx: this.state.jsx,
+      createdAt: Date.now(),
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ jsx: nextProps.components });
+  }
+
+  render() {
+    const { jsx } = this.state;
+    return (
+      <div className="Editor">
+        <CodeMirror
+          value={jsx && jsx[0].jsx}
+          onChange={(value) => { this.setState({jsx: value}) }}
+          options={options}/>
+        <button
+          className="Button"
+          onClick={this.handleSubmit.bind(this)}>
+          Send
+        </button>
+      </div>
+    );
+  }
+}
+
+Editor.propTypes = {
+  components: PropTypes.array.isRequired,
+};
 
 export default Editor;
