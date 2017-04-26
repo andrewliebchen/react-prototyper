@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import CodeMirror from 'react-codemirror';
 
-import 'codemirror/lib/codemirror.css';
-import 'codemirror/mode/jsx/jsx';
-import 'codemirror/theme/tomorrow-night-eighties.css';
+import Canvas from './Canvas';
+import Editor from './Editor';
 
 
 class App extends Component {
@@ -16,9 +13,12 @@ class App extends Component {
     };
   }
 
+  handleUpdate(value) {
+    this.setState({code: value});
+  }
+
   handleSubmit() {
     Meteor.call('returnReact', this.state.code, (error, component) => {
-      console.log(component);
       this.setState({component: component});
     });
   }
@@ -28,26 +28,11 @@ class App extends Component {
     return (
       <div className="App">
         <div className="Wrapper">
-          <div className="Canvas">
-            {component && React.createElement(
-              component.type,
-              component.props,
-              component.props.children
-            )}
-          </div>
-          <div className="Editor">
-            <CodeMirror
-              value={this.state.code}
-              onChange={(value) => { this.setState({code: value}) }}
-              options={{
-                lineNumbers: true,
-                smartIndent: true,
-                autoFocus: true,
-                mode: 'jsx',
-                theme: 'tomorrow-night-eighties',
-              }}/>
-            <button onClick={this.handleSubmit.bind(this)}>Send</button>
-          </div>
+          <Canvas component={this.state.component}/>
+          <Editor
+            code={this.state.code}
+            handleUpdate={this.handleUpdate.bind(this)}
+            handleSubmit={this.handleSubmit.bind(this)}/>
         </div>
       </div>
     );

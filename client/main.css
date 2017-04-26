@@ -34,5 +34,6 @@ body {
 }
 
 .CodeMirror {
-  height: 50vh;
+  height: 50vh !important;
+  margin: 0 !important;
 }
