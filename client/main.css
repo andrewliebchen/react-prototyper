@@ -26,20 +26,19 @@ body {
 .Canvas {
   background-color: white;
   height: 50vh;
+  position: relative;
 }
 
 .Editors {
   background-color: black;
   padding: 1em;
   height: 50vh;
+  overflow: auto;
 }
 
 .Editor {
   position: relative;
-}
-
-.Editor + .Editor {
-  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 .CodeMirror {

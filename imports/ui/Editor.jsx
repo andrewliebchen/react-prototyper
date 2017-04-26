@@ -42,7 +42,6 @@ class Editor extends Component {
           onChange={(value) => { this.setState({jsx: value}) }}
           options={options}/>
         <ButtonOutline
-          className="Button"
           onClick={this.handleUpdate.bind(this)}
           style={{
             position: 'absolute',
