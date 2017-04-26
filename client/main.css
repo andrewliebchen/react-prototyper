@@ -28,19 +28,22 @@ body {
   height: 50vh;
 }
 
-.Editor {
+.Editors {
+  background-color: black;
+  padding: 1em;
   height: 50vh;
-  /*background-color: #4B4F56;*/
+}
+
+.Editor {
+  position: relative;
+}
+
+.Editor + .Editor {
+  margin-top: 1em;
 }
 
 .CodeMirror {
-  height: 50vh !important;
   margin: 0 !important;
-}
-
-.Button {
-  position: absolute;
-  bottom: 1em;
-  right: 1em;
-  padding: 0 1em;
+  height: auto !important;
+  border: 1px solid #333;
 }

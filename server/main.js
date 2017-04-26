@@ -5,12 +5,14 @@ import React from 'react';
 import { Components } from '../imports/api/components';
 
 Meteor.methods({
-  returnReact(args) {
+  updateComponent(args) {
     let reactComponent = transform(args.jsx, {"presets": ["react"]}).code;
-    return Components.insert({
-      jsx: args.jsx,
-      reactComponent: reactComponent,
-      createdAt: args.createdAt,
+    return Components.update(args.id, {
+      $set: {
+        jsx: args.jsx,
+        reactComponent: reactComponent,
+        updatedAt: args.updatedAt,
+      }
     });
   },
 });

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const Canvas = (props) =>
   <div className="Canvas">
-    {props.components.length > 0 && props.components.map((component) =>
+    {props.components.map((component) =>
       <span key={component._id}>
         {eval(component.reactComponent)}
       </span>

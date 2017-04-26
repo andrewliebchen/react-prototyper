@@ -7,12 +7,18 @@ import { Components } from '../api/components';
 import Canvas from './Canvas';
 import Editor from './Editor';
 
-
+// Probably need an editor per component
 const App = (props) =>
   <div className="App">
     <div className="Wrapper">
       <Canvas components={props.components}/>
-      <Editor components={props.components}/>
+      <div className="Editors">
+        {props.components.map((component) =>
+          <Editor
+            key={component._id}
+            component={component}/>
+        )}
+      </div>
     </div>
   </div>
 

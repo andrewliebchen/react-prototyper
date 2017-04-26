@@ -17,5 +17,9 @@
   "main": "index.js",
   "author": "Andrew Liebchen <andrewliebchen@gmail.com>",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "rebass": "^0.3.4",
+    "reflexbox": "^2.2.3"
+  }
 }
