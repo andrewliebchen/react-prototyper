@@ -5,7 +5,7 @@ const Canvas = (props) =>
   <div className="Canvas">
     {props.components.map((component) =>
       <span key={component._id}>
-        {eval(component.reactComponent)}
+        {eval(component.transformedCode)}
       </span>
     )}
   </div>

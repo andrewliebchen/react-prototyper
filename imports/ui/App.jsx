@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Components } from '../api/components';
+import { States } from '../api/states';
 
 import Canvas from './Canvas';
 import Editors from './Editors';
@@ -12,7 +13,9 @@ const App = (props) =>
   <div className="App">
     <div className="Wrapper">
       <Canvas components={props.components}/>
-      <Editors components={props.components}/>
+      <Editors
+        components={props.components}
+        state={props.state}/>
     </div>
   </div>
 
@@ -23,5 +26,6 @@ App.propTypes = {
 export default createContainer(() => {
   return {
     components: Components.find({}).fetch(),
+    state: States.findOne(),
   };
 }, App);

@@ -15,7 +15,7 @@ class Editors extends Component {
   }
 
   render() {
-    const { components } = this.props;
+    const { components, state } = this.props;
     return (
       <Tabs className="Editors">
         <TabList className="EditorsHeader">
@@ -29,7 +29,8 @@ class Editors extends Component {
           {components.map((component) =>
             <Editor
               key={component._id}
-              element={component}/>
+              element={component}
+              type="component"/>
           )}
           <Button
             onClick={this.handleNewComponent}>
@@ -38,7 +39,12 @@ class Editors extends Component {
         </TabPanel>
         <TabPanel>Events</TabPanel>
         <TabPanel>Views</TabPanel>
-        <TabPanel>State</TabPanel>
+        <TabPanel>
+          <Editor
+            element={state}
+            type="state"
+            noBorder/>
+        </TabPanel>
         <TabPanel>Styles</TabPanel>
       </Tabs>
     );
@@ -46,7 +52,8 @@ class Editors extends Component {
 }
 
 Editors.propTypes = {
-  components: PropTypes.array.isRequired,
+  components: PropTypes.array,
+  state: PropTypes.object,
 };
 
 export default Editors;
