@@ -44,6 +44,12 @@ class Editor extends Component {
       theme: 'tomorrow-night-bright',
       smartIndent: this.props.type === 'component' ? true : false,
     };
+    const updateButtonStyle = {
+      position: 'absolute',
+      bottom: '1em',
+      right: '1em',
+      zIndex: 9999,
+    };
 
     return (
       <div className={classNames({
@@ -58,12 +64,7 @@ class Editor extends Component {
           options={options}/>
         <ButtonOutline
           onClick={this.handleUpdate.bind(this)}
-          style={{
-            position: 'absolute',
-            bottom: '1em',
-            right: '1em',
-            zIndex: 9999,
-          }}>
+          style={updateButtonStyle}>
           Update
         </ButtonOutline>
       </div>

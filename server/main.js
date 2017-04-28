@@ -37,6 +37,17 @@ Meteor.methods({
     });
   },
 
+  setState(args) {
+    let newState = JSON.parse(`{${args.userCode}}`);
+    update = States.update(args.id, {
+      $set: {
+        userCode: args.userCode,
+        transformedCode: newState,
+        updatedAt: args.updatedAt,
+      }
+    });
+  },
+
   updateElement(args) {
     let update;
 
@@ -52,14 +63,8 @@ Meteor.methods({
         });
         break;
       case 'state':
-        let newState = JSON.parse(`{${args.userCode}}`);
-        update = States.update(args.id, {
-          $set: {
-            userCode: args.userCode,
-            transformedCode: newState,
-            updatedAt: args.updatedAt,
-          }
-        });
+        Meteor.call('setState', args);
+        break;
     };
 
     return update;
