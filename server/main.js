@@ -53,6 +53,7 @@ Meteor.methods({
 
     switch (args.type) {
       case 'component':
+        console.log(args.id);
         let reactComponent = transform(args.userCode, {"presets": ["react"]}).code;
         update = Components.update(args.id, {
           $set: {

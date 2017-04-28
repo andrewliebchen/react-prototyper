@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import CodeMirror from 'react-codemirror';
 import { ButtonOutline, Message } from 'rebass';
 import classNames from 'classnames';
+import ReactInterval from 'react-interval';
 
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/javascript/javascript';
@@ -20,18 +21,21 @@ class Editor extends Component {
   }
 
   handleUpdate() {
-    Meteor.call('updateElement', {
-      type: this.props.type,
-      id: this.props.element._id,
-      userCode: this.state.userCode,
-      updatedAt: Date.now(),
-    }, (error, success) => {
-      if (error) {
-        this.setState({error: error.message});
-      } else {
-        this.setState({error: null});
-      }
-    });
+    // Check to see if things have changed, if so update...
+    if (this.state.userCode !== this.props.element.userCode) {
+      Meteor.call('updateElement', {
+        type: this.props.type,
+        id: this.props.element._id,
+        userCode: this.state.userCode,
+        updatedAt: Date.now(),
+      }, (error, success) => {
+        if (error) {
+          this.setState({error: error.message});
+        } else {
+          this.setState({error: null});
+        }
+      });
+    }
   }
 
   render() {
@@ -56,17 +60,24 @@ class Editor extends Component {
         'Editor': true,
         'hasBorder': !this.props.noBorder,
       })}>
+        <ReactInterval
+          timeout={3000}
+          enabled={true}
+          callback={() => {
+            console.log(this.state.userCode);
+            this.handleUpdate()}
+          }/>
         {this.state.error &&
           <Message theme="error">{this.state.error}</Message>}
         <CodeMirror
           value={userCode && userCode}
           onChange={(value) => { this.setState({userCode: value}) }}
           options={options}/>
-        <ButtonOutline
+        {/* <ButtonOutline
           onClick={this.handleUpdate.bind(this)}
           style={updateButtonStyle}>
           Update
-        </ButtonOutline>
+        </ButtonOutline> */}
       </div>
     );
   }
