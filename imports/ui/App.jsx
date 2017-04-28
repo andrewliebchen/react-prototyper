@@ -12,7 +12,8 @@ import Editors from './Editors';
 const App = (props) =>
   <div className="App">
     <div className="Wrapper">
-      <Canvas components={props.components}/>
+      <Canvas
+        components={props.components}/>
       <Editors
         components={props.components}
         state={props.state}/>

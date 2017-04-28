@@ -50,6 +50,7 @@ Meteor.methods({
             updatedAt: args.updatedAt,
           }
         });
+        break;
       case 'state':
         let newState = JSON.parse(`{${args.userCode}}`);
         update = States.update(args.id, {
