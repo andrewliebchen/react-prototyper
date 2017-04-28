@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CodeMirror from 'react-codemirror';
-import { ButtonOutline, Message } from 'rebass';
+import { Message } from 'rebass';
 import classNames from 'classnames';
 import ReactInterval from 'react-interval';
 
@@ -48,12 +48,6 @@ class Editor extends Component {
       theme: 'tomorrow-night-bright',
       smartIndent: this.props.type === 'component' ? true : false,
     };
-    const updateButtonStyle = {
-      position: 'absolute',
-      bottom: '1em',
-      right: '1em',
-      zIndex: 9999,
-    };
 
     return (
       <div className={classNames({
@@ -64,7 +58,6 @@ class Editor extends Component {
           timeout={3000}
           enabled={true}
           callback={() => {
-            console.log(this.state.userCode);
             this.handleUpdate()}
           }/>
         {this.state.error &&
@@ -73,11 +66,6 @@ class Editor extends Component {
           value={userCode && userCode}
           onChange={(value) => { this.setState({userCode: value}) }}
           options={options}/>
-        {/* <ButtonOutline
-          onClick={this.handleUpdate.bind(this)}
-          style={updateButtonStyle}>
-          Update
-        </ButtonOutline> */}
       </div>
     );
   }
