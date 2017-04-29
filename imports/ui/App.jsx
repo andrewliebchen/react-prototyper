@@ -19,6 +19,7 @@ class App extends Component {
       widthRatio: null,
       canvasHeight: null,
       editorsHeight: null,
+      editorsTop: null,
       preview: false,
     };
   }
@@ -33,6 +34,7 @@ class App extends Component {
     this.setState({
       widthRatio: widthRatio,
       canvasHeight: canvasHeight,
+      editorsTop: canvasHeight > viewport.height ? viewport.height : canvasHeight,
       editorsHeight: viewport.height - canvasHeight,
     });
     this._resizeHandler = this._resizeHandler.bind(this);
@@ -44,20 +46,27 @@ class App extends Component {
 
   render() {
     const { components, state } = this.props;
-    const { widthRatio, canvasHeight, preview, editorsHeight } = this.state;
+    const {
+      widthRatio,
+      canvasHeight,
+      preview,
+      editorsHeight,
+      editorsTop
+    } = this.state;
     return (
       <div className="App">
         <ReactWindowResizeListener onResize={this._resizeHandler}/>
-        <ButtonOutline
-          onClick={() => this.setState({preview: !preview})}
-          style={{
-            position: 'fixed',
-            right: 3,
-            top: 3,
-            zIndex: 9999,
-          }}>
-          Preview
-        </ButtonOutline>
+        {widthRatio < 1 &&
+          <ButtonOutline
+            onClick={() => this.setState({preview: !preview})}
+            style={{
+              position: 'fixed',
+              right: 3,
+              top: 3,
+              zIndex: 9999,
+            }}>
+            Preview
+          </ButtonOutline>}
         <Canvas
           components={components}
           scale={widthRatio}
@@ -68,7 +77,8 @@ class App extends Component {
             state={state}
             canvasHeight={canvasHeight}
             maxWidth={maxWidth}
-            height={editorsHeight}/>}
+            height={editorsHeight}
+            top={editorsTop}/>}
       </div>
     );
   }

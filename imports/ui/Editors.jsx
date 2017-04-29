@@ -17,12 +17,19 @@ class Editors extends Component {
   }
 
   render() {
-    const { components, state, canvasHeight, maxWidth, height } = this.props;
+    const {
+      components,
+      state,
+      canvasHeight,
+      maxWidth,
+      height,
+      top
+    } = this.props;
     return (
       <Tabs
         className="Editors"
         style={{
-          top: canvasHeight,
+          top: top,
           maxWidth: maxWidth,
           minHeight: height,
         }}>
@@ -30,7 +37,6 @@ class Editors extends Component {
           <Tab>Components</Tab>
           <Tab>State</Tab>
         </TabList>
-
         <TabPanel>
           {components.map((component) =>
             <Editor
@@ -59,6 +65,7 @@ Editors.propTypes = {
   canvasHeight: PropTypes.number,
   maxWidth: PropTypes.number,
   height: PropTypes.number,
+  top: PropTypes.number,
 };
 
 export default Editors;
