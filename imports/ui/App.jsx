@@ -18,6 +18,7 @@ class App extends Component {
     this.state = {
       widthRatio: null,
       canvasHeight: null,
+      editorsHeight: null,
       preview: false,
     };
   }
@@ -28,9 +29,11 @@ class App extends Component {
       height: window.innerHeight,
     };
     let widthRatio = maxWidth / viewport.width;
+    let canvasHeight = viewport.height * widthRatio;
     this.setState({
       widthRatio: widthRatio,
-      canvasHeight: viewport.height * widthRatio,
+      canvasHeight: canvasHeight,
+      editorsHeight: viewport.height - canvasHeight,
     });
     this._resizeHandler = this._resizeHandler.bind(this);
   }
@@ -41,7 +44,7 @@ class App extends Component {
 
   render() {
     const { components, state } = this.props;
-    const { widthRatio, canvasHeight, preview } = this.state;
+    const { widthRatio, canvasHeight, preview, editorsHeight } = this.state;
     return (
       <div className="App">
         <ReactWindowResizeListener onResize={this._resizeHandler}/>
@@ -64,7 +67,8 @@ class App extends Component {
             components={components}
             state={state}
             canvasHeight={canvasHeight}
-            maxWidth={maxWidth}/>}
+            maxWidth={maxWidth}
+            height={editorsHeight}/>}
       </div>
     );
   }

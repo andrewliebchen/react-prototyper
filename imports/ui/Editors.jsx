@@ -7,6 +7,8 @@ import Editor from './Editor';
 
 Tabs.setUseDefaultStyles(false);
 
+// Want a drag handle, Canvas scroll under...
+
 class Editors extends Component {
   handleNewComponent() {
     Meteor.call('newComponent', {
@@ -15,13 +17,14 @@ class Editors extends Component {
   }
 
   render() {
-    const { components, state, canvasHeight, maxWidth } = this.props;
+    const { components, state, canvasHeight, maxWidth, height } = this.props;
     return (
       <Tabs
         className="Editors"
         style={{
           top: canvasHeight,
           maxWidth: maxWidth,
+          minHeight: height,
         }}>
         <TabList className="EditorsHeader">
           <Tab>Components</Tab>
@@ -55,6 +58,7 @@ Editors.propTypes = {
   state: PropTypes.object,
   canvasHeight: PropTypes.number,
   maxWidth: PropTypes.number,
+  height: PropTypes.number,
 };
 
 export default Editors;
