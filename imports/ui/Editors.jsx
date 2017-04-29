@@ -35,8 +35,7 @@ class Editors extends Component {
               element={component}
               type="component"/>
           )}
-          <Button
-            onClick={this.handleNewComponent}>
+          <Button onClick={this.handleNewComponent}>
             New component
           </Button>
         </TabPanel>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import ReactWindowResizeListener from 'window-resize-listener-react';
+import { ButtonOutline } from 'rebass';
 
 import { Components } from '../api/components';
 import { States } from '../api/states';
@@ -17,11 +18,11 @@ class App extends Component {
     this.state = {
       widthRatio: null,
       canvasHeight: null,
+      preview: false,
     };
   }
 
   _resizeHandler() {
-    console.log('resize');
     let viewport = {
       width: window.innerWidth,
       height: window.innerHeight,
@@ -40,18 +41,30 @@ class App extends Component {
 
   render() {
     const { components, state } = this.props;
-    const { widthRatio, canvasHeight } = this.state;
+    const { widthRatio, canvasHeight, preview } = this.state;
     return (
       <div className="App">
         <ReactWindowResizeListener onResize={this._resizeHandler}/>
+        <ButtonOutline
+          onClick={() => this.setState({preview: !preview})}
+          style={{
+            position: 'fixed',
+            right: 3,
+            top: 3,
+            zIndex: 9999,
+          }}>
+          Preview
+        </ButtonOutline>
         <Canvas
           components={components}
-          scale={widthRatio}/>
-        <Editors
-          components={components}
-          state={state}
-          canvasHeight={canvasHeight}
-          maxWidth={maxWidth}/>
+          scale={widthRatio}
+          preview={preview}/>
+        {!this.state.preview &&
+          <Editors
+            components={components}
+            state={state}
+            canvasHeight={canvasHeight}
+            maxWidth={maxWidth}/>}
       </div>
     );
   }

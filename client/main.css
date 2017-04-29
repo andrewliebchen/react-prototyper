@@ -23,6 +23,9 @@ body {
   height: 100vh;
   width: 100vw;
   position: relative;
+  transform-origin: center top;
+  transition: 0.1s ease-in-out;
+  z-index: 999;
 }
 
 .Editors {
