@@ -37,7 +37,18 @@ class Editors extends Component {
             New component
           </Button>
         </TabPanel>
-        <TabPanel>Events</TabPanel>
+        <TabPanel>
+          {events.map((component) =>
+            <Editor
+              key={component._id}
+              element={component}
+              type="component"/>
+          )}
+          <Button
+            onClick={this.handleNewEvent}>
+            New event
+          </Button>
+        </TabPanel>
         <TabPanel>Views</TabPanel>
         <TabPanel>
           <Editor
@@ -54,6 +65,7 @@ class Editors extends Component {
 Editors.propTypes = {
   components: PropTypes.array,
   state: PropTypes.object,
+  events: PropTypes.array,
 };
 
 export default Editors;

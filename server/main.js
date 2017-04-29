@@ -4,6 +4,9 @@ import React from 'react';
 
 import { Components } from '../imports/api/components';
 import { States } from '../imports/api/states';
+import { Events } from '../imports/api/events';
+
+// TODO: For state, just use JSON.stringify to get the userValue, or use a GUI
 
 Meteor.startup(() => {
   if (Components.find().count() === 0) {
