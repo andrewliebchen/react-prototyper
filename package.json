@@ -24,6 +24,7 @@
     "react-shortcut": "^1.0.6",
     "react-tabs": "^0.8.3",
     "rebass": "^0.3.4",
-    "reflexbox": "^2.2.3"
+    "reflexbox": "^2.2.3",
+    "window-resize-listener-react": "^1.0.3"
   }
 }

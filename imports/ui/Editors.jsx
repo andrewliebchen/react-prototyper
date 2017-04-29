@@ -15,15 +15,17 @@ class Editors extends Component {
   }
 
   render() {
-    const { components, state, events } = this.props;
+    const { components, state, canvasHeight, maxWidth } = this.props;
     return (
-      <Tabs className="Editors">
+      <Tabs
+        className="Editors"
+        style={{
+          top: canvasHeight,
+          maxWidth: maxWidth,
+        }}>
         <TabList className="EditorsHeader">
           <Tab>Components</Tab>
-          {/* <Tab>Events</Tab> */}
-          {/* <Tab>Views</Tab> */}
           <Tab>State</Tab>
-          {/* <Tab>Styles</Tab> */}
         </TabList>
 
         <TabPanel>
@@ -38,30 +40,12 @@ class Editors extends Component {
             New component
           </Button>
         </TabPanel>
-
-        {/* <TabPanel>
-          {events.map((event) =>
-            <Editor
-              key={event._id}
-              element={event}
-              type="event"/>
-          )}
-          <Button
-            onClick={this.handleNewEvent}>
-            New event
-          </Button>
-        </TabPanel> */}
-
-        {/* <TabPanel>Views</TabPanel> */}
-
         <TabPanel>
           <Editor
             element={state}
             type="state"
             noBorder/>
         </TabPanel>
-
-        {/* <TabPanel>Styles</TabPanel> */}
       </Tabs>
     );
   }
@@ -70,6 +54,8 @@ class Editors extends Component {
 Editors.propTypes = {
   components: PropTypes.array,
   state: PropTypes.object,
+  canvasHeight: PropTypes.number,
+  maxWidth: PropTypes.number,
 };
 
 export default Editors;

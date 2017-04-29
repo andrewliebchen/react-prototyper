@@ -20,7 +20,13 @@ class Canvas extends Component {
     };
 
     return (
-      <div className="Canvas">
+      <div
+        className="Canvas"
+        ref="canvas"
+        style={{
+          transform: `scale(${this.props.scale < 1 && this.props.scale})`,
+          transformOrigin: 'center top',
+        }}>
         {this.props.state && this.props.components.map((component) =>
           <span key={component._id}>
             {eval(component.transformedCode)}
@@ -34,6 +40,7 @@ class Canvas extends Component {
 Canvas.propTypes = {
   components: PropTypes.array,
   state: PropTypes.object,
+  scale: PropTypes.number,
 };
 
 export default createContainer(() => {
