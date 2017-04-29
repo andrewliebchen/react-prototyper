@@ -9,6 +9,8 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/jsx/jsx';
 import 'codemirror/theme/tomorrow-night-bright.css';
+import 'codemirror/addon/edit/matchbrackets';
+import 'codemirror/addon/edit/matchtags';
 
 class Editor extends Component {
   constructor(props) {
@@ -47,6 +49,8 @@ class Editor extends Component {
       mode: this.props.type === 'component' ? 'jsx' : 'javascript',
       theme: 'tomorrow-night-bright',
       smartIndent: this.props.type === 'component' ? true : false,
+      matchBrackets: true,
+      matchTags: true,
     };
 
     return (
@@ -54,17 +58,20 @@ class Editor extends Component {
         'Editor': true,
         'hasBorder': !this.props.noBorder,
       })}>
-        <ReactInterval
+        {/* <ReactInterval
           timeout={3000}
           enabled={true}
           callback={() => {
             this.handleUpdate()}
-          }/>
+          }/> */}
         {this.state.error &&
           <Message theme="error">{this.state.error}</Message>}
         <CodeMirror
           value={userCode && userCode}
-          onChange={(value) => { this.setState({userCode: value}) }}
+          onChange={(value) => {
+            this.setState({userCode: value});
+            this.handleUpdate();
+          }}
           options={options}/>
       </div>
     );
@@ -77,7 +84,11 @@ Editor.propTypes = {
     PropTypes.object,
   ]),
   noBorder: PropTypes.bool,
-  type: PropTypes.oneOf(['component', 'state']),
+  type: PropTypes.oneOf([
+    'component',
+    'state',
+    'event',
+  ]),
 };
 
 export default Editor;

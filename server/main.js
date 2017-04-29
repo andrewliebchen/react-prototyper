@@ -4,7 +4,6 @@ import React from 'react';
 
 import { Components } from '../imports/api/components';
 import { States } from '../imports/api/states';
-import { Events } from '../imports/api/events';
 
 // TODO: For state, just use JSON.stringify to get the userValue, or use a GUI
 
@@ -56,7 +55,6 @@ Meteor.methods({
 
     switch (args.type) {
       case 'component':
-        console.log(args.id);
         let reactComponent = transform(args.userCode, {"presets": ["react"]}).code;
         update = Components.update(args.id, {
           $set: {
@@ -69,8 +67,24 @@ Meteor.methods({
       case 'state':
         Meteor.call('setState', args);
         break;
+      // case 'event':
+      //   let es5Function = transform(args.userCode, {"presets": ["meteor"]}).code;
+      //   update = Events.update(args.id, {
+      //     $set: {
+      //       userCode: args.userCode,
+      //       transformedCode: es5Function,
+      //       updatedAt: args.updatedAt,
+      //     }
+      //   });
+      //   break;
     };
 
     return update;
   },
+
+  newEvent(args) {
+    return Events.insert({
+      createdAt: args.createdAt,
+    });
+  }
 });

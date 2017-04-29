@@ -5,17 +5,20 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 import { States } from '../api/states';
 
+const View = () =>
+  <div className="view">VIEW</div>
+
 class Canvas extends Component {
   render() {
     const state = this.props.state && this.props.state.transformedCode;
     let setState = (newState) => {
-      console.log(newState);
       Meteor.call('setState', {
         id: this.props.state._id,
         userCode: newState,
         updatedAt: Date.now(),
       });
-    }
+    };
+
     return (
       <div className="Canvas">
         {this.props.state && this.props.components.map((component) =>

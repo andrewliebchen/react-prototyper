@@ -15,16 +15,17 @@ class Editors extends Component {
   }
 
   render() {
-    const { components, state } = this.props;
+    const { components, state, events } = this.props;
     return (
       <Tabs className="Editors">
         <TabList className="EditorsHeader">
           <Tab>Components</Tab>
-          <Tab>Events</Tab>
-          <Tab>Views</Tab>
+          {/* <Tab>Events</Tab> */}
+          {/* <Tab>Views</Tab> */}
           <Tab>State</Tab>
-          <Tab>Styles</Tab>
+          {/* <Tab>Styles</Tab> */}
         </TabList>
+
         <TabPanel>
           {components.map((component) =>
             <Editor
@@ -37,26 +38,30 @@ class Editors extends Component {
             New component
           </Button>
         </TabPanel>
-        <TabPanel>
-          {events.map((component) =>
+
+        {/* <TabPanel>
+          {events.map((event) =>
             <Editor
-              key={component._id}
-              element={component}
-              type="component"/>
+              key={event._id}
+              element={event}
+              type="event"/>
           )}
           <Button
             onClick={this.handleNewEvent}>
             New event
           </Button>
-        </TabPanel>
-        <TabPanel>Views</TabPanel>
+        </TabPanel> */}
+
+        {/* <TabPanel>Views</TabPanel> */}
+
         <TabPanel>
           <Editor
             element={state}
             type="state"
             noBorder/>
         </TabPanel>
-        <TabPanel>Styles</TabPanel>
+
+        {/* <TabPanel>Styles</TabPanel> */}
       </Tabs>
     );
   }
@@ -65,7 +70,6 @@ class Editors extends Component {
 Editors.propTypes = {
   components: PropTypes.array,
   state: PropTypes.object,
-  events: PropTypes.array,
 };
 
 export default Editors;
