@@ -6,6 +6,7 @@ import { ButtonOutline } from 'rebass';
 
 import { Components } from '../api/components';
 import { States } from '../api/states';
+import { Projects } from '../api/projects';
 
 import Canvas from './Canvas';
 import Editors from './Editors';
@@ -20,7 +21,7 @@ class App extends Component {
       canvasHeight: null,
       editorsHeight: null,
       editorsTop: null,
-      preview: false,
+      preview: null,
     };
   }
 
@@ -69,6 +70,7 @@ class App extends Component {
           </ButtonOutline>}
         <Canvas
           components={components}
+          state={state}
           scale={widthRatio}
           preview={preview}/>
         {!this.state.preview &&
@@ -89,9 +91,12 @@ App.propTypes = {
   components: PropTypes.array,
 };
 
-export default createContainer(() => {
+// TODO: PUB/SUB!
+export default createContainer(({ match }) => {
+  const project = match.params._id;
   return {
-    components: Components.find({}).fetch(),
-    state: States.findOne(),
+    components: Components.find({project: project}).fetch(),
+    state: States.findOne({project: project}),
+    projects: Projects.findOne(project),
   };
 }, App);

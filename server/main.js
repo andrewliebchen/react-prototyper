@@ -2,40 +2,54 @@ import { Meteor } from 'meteor/meteor';
 import { transform } from 'babel-core';
 import React from 'react';
 
+import { Projects } from '../imports/api/projects';
 import { Components } from '../imports/api/components';
 import { States } from '../imports/api/states';
 
 // TODO: For state, just use JSON.stringify to get the userValue, or use a GUI
 
 Meteor.startup(() => {
-  if (Components.find().count() === 0) {
-    Meteor.call('componentBootstrap');
+  if (Projects.find().count() === 0) {
+    const bootstrapProject = Meteor.call('newProject', {
+      createdAt: Date.now(),
+    });
+    Meteor.call('componentBootstrap', bootstrapProject);
+    Meteor.call('stateBootstrap', bootstrapProject);
+
+    console.log(bootstrapProject);
   }
-  if (States.find().count() === 0) {
-    Meteor.call('stateBootstrap');
-  }
+
 });
 
 Meteor.methods({
-  stateBootstrap() {
+  stateBootstrap(project) {
     States.insert({
       userCode: '"modal": false',
       transformedCode: { "modal": false },
       createdAt: Date.now(),
+      project: project,
     });
   },
 
-  componentBootstrap() {
+  componentBootstrap(project) {
     Components.insert({
       userCode: '<div>Hello world!</div>',
       transformedCode: "React.createElement('div', null, 'Hello world!')",
       createdAt: Date.now(),
+      project: project,
+    });
+  },
+
+  newProject(args) {
+    return Projects.insert({
+      createdAt: args.createdAt,
     });
   },
 
   newComponent(args) {
     return Components.insert({
       createdAt: args.createdAt,
+      project: args.project,
     });
   },
 

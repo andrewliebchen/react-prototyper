@@ -16,7 +16,7 @@ class Canvas extends Component {
   }
 
   render() {
-    const { scale, preview } = this.props;
+    const { scale, preview, noTransition } = this.props;
     const state = this.props.state && this.props.state.transformedCode;
     const setState = (newState) => this._setState(newState);
     const canvasScale = scale < 1 && !preview ? scale : 1;
@@ -26,6 +26,7 @@ class Canvas extends Component {
         className="Canvas"
         style={{
           transform: `scale(${canvasScale})`,
+          transition: noTransition ? 'none' : '0.1s ease-in-out',
         }}>
         {this.props.state && this.props.components.map((component) =>
           <span key={component._id}>
@@ -42,10 +43,7 @@ Canvas.propTypes = {
   state: PropTypes.object,
   scale: PropTypes.number,
   preview: PropTypes.bool,
+  noTransition: PropTypes.bool,
 };
 
-export default createContainer(() => {
-  return {
-    state: States.findOne(),
-  };
-}, Canvas);
+export default Canvas;
