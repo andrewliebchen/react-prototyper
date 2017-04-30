@@ -29,7 +29,7 @@ body {
 
 .Editors {
   background-color: #282a36;
-  padding: 1em;
+  padding: 1em 2em;
   color: white;
   position: absolute;
   left: 50%;
@@ -61,6 +61,7 @@ body {
 .ReactTabs__Tab--selected:hover {
   color: white;
 }
+
 
 .Editor {
   position: relative;

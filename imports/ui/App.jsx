@@ -53,7 +53,9 @@ class App extends Component {
       canvasHeight,
       preview,
       editorsHeight,
-      editorsTop
+      editorsTop,
+      settings,
+      user,
     } = this.state;
     return (
       <div className="App">
@@ -99,9 +101,10 @@ class App extends Component {
               New Project
             </Button>
           </span>}
+
         <HotKey
           keys={['escape']}
-          onKeysCoincide={() => this.setState({preview: false})}/>}
+          onKeysCoincide={() => this.setState({preview: false})}/>
       </div>
     );
   }
