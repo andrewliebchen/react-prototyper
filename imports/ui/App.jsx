@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import ReactWindowResizeListener from 'window-resize-listener-react';
 import { Button, ButtonOutline } from 'rebass';
+import HotKey from 'react-shortcut';
 
 import { Components } from '../api/components';
 import { States } from '../api/states';
@@ -73,7 +74,7 @@ class App extends Component {
           state={state}
           scale={widthRatio}
           preview={preview}/>
-        {!this.state.preview &&
+        {!preview &&
           <span>
             <Editors
               components={components}
@@ -98,6 +99,9 @@ class App extends Component {
               New Project
             </Button>
           </span>}
+        <HotKey
+          keys={['escape']}
+          onKeysCoincide={() => this.setState({preview: false})}/>}
       </div>
     );
   }

@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
+
 import * as ui from 'rebass';
+import * as icon from 'reline';
 
 import { States } from '../api/states';
 
