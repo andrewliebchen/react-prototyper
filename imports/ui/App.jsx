@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import ReactWindowResizeListener from 'window-resize-listener-react';
-import { ButtonOutline } from 'rebass';
+import { Button, ButtonOutline } from 'rebass';
 
 import { Components } from '../api/components';
 import { States } from '../api/states';
@@ -62,8 +62,8 @@ class App extends Component {
             onClick={() => this.setState({preview: !preview})}
             style={{
               position: 'fixed',
-              right: 3,
-              top: 3,
+              right: 10,
+              top: 10,
               zIndex: 9999,
             }}>
             Preview
@@ -74,13 +74,30 @@ class App extends Component {
           scale={widthRatio}
           preview={preview}/>
         {!this.state.preview &&
-          <Editors
-            components={components}
-            state={state}
-            canvasHeight={canvasHeight}
-            maxWidth={maxWidth}
-            height={editorsHeight}
-            top={editorsTop}/>}
+          <span>
+            <Editors
+              components={components}
+              state={state}
+              canvasHeight={canvasHeight}
+              maxWidth={maxWidth}
+              height={editorsHeight}
+              top={editorsTop}/>
+            <Button
+              onClick={() => {
+                Meteor.call('newProject', {
+                  createdAt: Date.now(),
+                }, (error, success) => {
+                  success && this.props.history.push(`/${success}`);
+                });
+              }}
+              style={{
+                position: 'fixed',
+                bottom: 10,
+                right: 10,
+              }}>
+              New Project
+            </Button>
+          </span>}
       </div>
     );
   }

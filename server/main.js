@@ -10,15 +10,8 @@ import { States } from '../imports/api/states';
 
 Meteor.startup(() => {
   if (Projects.find().count() === 0) {
-    const bootstrapProject = Meteor.call('newProject', {
-      createdAt: Date.now(),
-    });
-    Meteor.call('componentBootstrap', bootstrapProject);
-    Meteor.call('stateBootstrap', bootstrapProject);
-
-    console.log(bootstrapProject);
+    Meteor.call('newProject', {createdAt: Date.now()});
   }
-
 });
 
 Meteor.methods({
@@ -41,9 +34,16 @@ Meteor.methods({
   },
 
   newProject(args) {
-    return Projects.insert({
+    const bootstrapProject = Projects.insert({
       createdAt: args.createdAt,
     });
+
+    Meteor.call('componentBootstrap', bootstrapProject);
+    Meteor.call('stateBootstrap', bootstrapProject);
+
+    console.log(bootstrapProject);
+
+    return bootstrapProject;
   },
 
   newComponent(args) {

@@ -71,7 +71,7 @@ body {
   position: absolute;
   right: 1em;
   top: 1em;
-  color: #333;
+  color: black;
   cursor: pointer;
   z-index: 99;
 }
@@ -87,6 +87,6 @@ body {
 }
 
 .Editor.hasBorder .CodeMirror {
-  border: 1px solid #333;
+  border: 1px solid black;
   padding: 0.5em;
 }
