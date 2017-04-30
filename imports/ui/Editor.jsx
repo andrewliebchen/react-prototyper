@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import CodeMirror from 'react-codemirror';
 import { Message } from 'rebass';
 import classNames from 'classnames';
-import ReactInterval from 'react-interval';
+import { X } from 'reline';
 
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/javascript/javascript';
@@ -40,6 +40,12 @@ class Editor extends Component {
     }
   }
 
+  handleDelete() {
+    if (window.confirm('Sure you want to do that?')) {
+      Meteor.call('deleteComponent', this.props.element._id);      
+    }
+  }
+
   render() {
     const { userCode } = this.state;
     const options = {
@@ -58,21 +64,19 @@ class Editor extends Component {
         'Editor': true,
         'hasBorder': !this.props.noBorder,
       })}>
-        {/* <ReactInterval
-          timeout={3000}
-          enabled={true}
-          callback={() => {
-            this.handleUpdate()}
-          }/> */}
         {this.state.error &&
           <Message theme="error">{this.state.error}</Message>}
         <CodeMirror
           value={userCode && userCode}
+          options={options}
           onChange={(value) => {
             this.setState({userCode: value});
             this.handleUpdate();
-          }}
-          options={options}/>
+          }}/>
+        {this.props.canDelete &&
+          <X
+            className="EditorDelete"
+            onClick={this.handleDelete.bind(this)}/>}
       </div>
     );
   }
@@ -89,6 +93,7 @@ Editor.propTypes = {
     'state',
     'event',
   ]),
+  canDelete: PropTypes.bool,
 };
 
 export default Editor;

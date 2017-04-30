@@ -68,6 +68,19 @@ body {
   margin-bottom: 1em;
 }
 
+.EditorDelete {
+  position: absolute;
+  right: 1em;
+  top: 1em;
+  color: #333;
+  cursor: pointer;
+  z-index: 99;
+}
+
+.EditorDelete:hover {
+  color: white;
+}
+
 .CodeMirror {
   margin: 0 !important;
   height: auto !important;

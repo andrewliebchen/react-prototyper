@@ -25,6 +25,7 @@
     "react-tabs": "^0.8.3",
     "rebass": "^0.3.4",
     "reflexbox": "^2.2.3",
+    "reline": "^1.0.0-beta.3",
     "window-resize-listener-react": "^1.0.3"
   }
 }

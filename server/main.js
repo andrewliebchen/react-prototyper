@@ -67,24 +67,12 @@ Meteor.methods({
       case 'state':
         Meteor.call('setState', args);
         break;
-      // case 'event':
-      //   let es5Function = transform(args.userCode, {"presets": ["meteor"]}).code;
-      //   update = Events.update(args.id, {
-      //     $set: {
-      //       userCode: args.userCode,
-      //       transformedCode: es5Function,
-      //       updatedAt: args.updatedAt,
-      //     }
-      //   });
-      //   break;
     };
 
     return update;
   },
 
-  newEvent(args) {
-    return Events.insert({
-      createdAt: args.createdAt,
-    });
-  }
+  deleteComponent(id) {
+    Components.remove(id);
+  },
 });

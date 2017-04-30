@@ -42,7 +42,8 @@ class Editors extends Component {
             <Editor
               key={component._id}
               element={component}
-              type="component"/>
+              type="component"
+              canDelete/>
           )}
           <Button onClick={this.handleNewComponent}>
             New component
