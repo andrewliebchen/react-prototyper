@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CodeMirror from 'react-codemirror';
-import { Message } from 'rebass';
+import { Tooltip } from 'rebass';
 import classNames from 'classnames';
-import { X } from 'reline';
+import { X, Triangle } from 'reline';
 
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/javascript/javascript';
@@ -64,8 +64,6 @@ class Editor extends Component {
         'Editor': true,
         'hasBorder': !this.props.noBorder,
       })}>
-        {this.state.error &&
-          <Message theme="error">{this.state.error}</Message>}
         <CodeMirror
           value={userCode && userCode}
           options={options}
@@ -73,10 +71,15 @@ class Editor extends Component {
             this.setState({userCode: value});
             this.handleUpdate();
           }}/>
-        {this.props.canDelete &&
-          <X
-            className="EditorDelete"
-            onClick={this.handleDelete.bind(this)}/>}
+        <div className="EditorActions">
+          <Triangle up
+            className="EditorError"
+            style={{color: this.state.error && '#FF4136'}}/>
+          {this.props.canDelete &&
+            <X
+              className="EditorDelete"
+              onClick={this.handleDelete.bind(this)}/>}
+        </div>
       </div>
     );
   }
