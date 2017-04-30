@@ -7,13 +7,13 @@ import {
 } from 'react-router-dom'
 
 import App from '../imports/ui/App';
-import CanvasView from '../imports/ui/CanvasView';
+import Preview from '../imports/ui/Preview';
 
 const Routes = () =>
   <Router>
     <span>
       {/* <Route exact path="/" component={App}/> */}
-      <Route exact path="/:_id/preview" component={CanvasView}/>
+      <Route exact path="/:_id/preview" component={Preview}/>
       <Route exact path="/:_id" component={App}/>
     </span>
   </Router>

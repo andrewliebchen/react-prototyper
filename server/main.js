@@ -14,6 +14,23 @@ Meteor.startup(() => {
   }
 });
 
+// Publications
+Meteor.publish('project', (projectId) => {
+  return [
+    Components.find({project: projectId}),
+    States.find({project: projectId}),
+    Projects.find({_id: projectId}),
+  ];
+});
+
+Meteor.publish('preview', (projectId) => {
+  return [
+    Components.find({project: projectId}),
+    States.find({project: projectId}),
+  ];
+});
+
+// Methods
 Meteor.methods({
   stateBootstrap(project) {
     States.insert({

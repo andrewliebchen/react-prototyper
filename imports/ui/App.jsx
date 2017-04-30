@@ -110,10 +110,10 @@ App.propTypes = {
 
 // TODO: PUB/SUB!
 export default createContainer(({ match }) => {
-  const project = match.params._id;
+  Meteor.subscribe('project', match.params._id);
   return {
-    components: Components.find({project: project}).fetch(),
-    state: States.findOne({project: project}),
-    projects: Projects.findOne(project),
+    components: Components.find().fetch(),
+    state: States.findOne(),
+    projects: Projects.findOne(),
   };
 }, App);

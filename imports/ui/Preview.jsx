@@ -8,10 +8,10 @@ import { States } from '../api/states';
 import { Projects } from '../api/projects';
 
 export default createContainer(({ match }) => {
-  const project = match.params._id;
+  Meteor.subscribe('project', match.params._id);
   return {
-    components: Components.find({project: project}).fetch(),
-    state: States.findOne({project: project}),
+    components: Components.find().fetch(),
+    state: States.findOne(),
     noTransition: true,
     preview: true,
     scale: 1,
