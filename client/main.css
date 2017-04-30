@@ -28,7 +28,7 @@ body {
 }
 
 .Editors {
-  background-color: black;
+  background-color: #282a36;
   padding: 1em;
   color: white;
   position: absolute;
@@ -47,14 +47,14 @@ body {
   flex: 0 0 auto;
   margin-right: 2em;
   display: inline-block;
-  color: #666;
+  color: #6D8A88;
   font-weight: bold;
   cursor: pointer;
   user-select: none;
 }
 
 .ReactTabs__Tab:hover {
-  color: #999;
+  color: #afc0bf;
 }
 
 .ReactTabs__Tab--selected,

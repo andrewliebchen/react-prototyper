@@ -8,7 +8,7 @@ import { X } from 'reline';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/jsx/jsx';
-import 'codemirror/theme/tomorrow-night-bright.css';
+import 'codemirror/theme/dracula';
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/edit/matchtags';
 
@@ -42,7 +42,7 @@ class Editor extends Component {
 
   handleDelete() {
     if (window.confirm('Sure you want to do that?')) {
-      Meteor.call('deleteComponent', this.props.element._id);      
+      Meteor.call('deleteComponent', this.props.element._id);
     }
   }
 
@@ -53,7 +53,7 @@ class Editor extends Component {
       smartIndent: true,
       viewportMargin: Infinity,
       mode: this.props.type === 'component' ? 'jsx' : 'javascript',
-      theme: 'tomorrow-night-bright',
+      theme: 'dracula',
       smartIndent: this.props.type === 'component' ? true : false,
       matchBrackets: true,
       matchTags: true,
