@@ -1,5 +1,5 @@
 .Editors {
-  background-color: #282a36;
+  background-color: var(--color-gray-dark);
   padding: 1em 2em;
   color: white;
   position: absolute;

@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import ReactWindowResizeListener from 'window-resize-listener-react';
-import { Button, ButtonOutline } from 'rebass';
 import HotKey from 'react-shortcut';
 
 import { Components } from '../api/components';
 import { States } from '../api/states';
 import { Projects } from '../api/projects';
 
+import Nav from './Nav';
 import Canvas from './Canvas';
 import Editors from './Editors';
 
-import styles from '../styles/Global.css';
+import styles from '../styles/App.css';
 
 const maxWidth = 1200;
 
@@ -62,17 +62,16 @@ class App extends Component {
     return (
       <div className="App">
         <ReactWindowResizeListener onResize={this._resizeHandler}/>
-        {widthRatio < 1 &&
-          <ButtonOutline
-            onClick={() => this.setState({preview: !preview})}
-            style={{
-              position: 'fixed',
-              right: 10,
-              top: 10,
-              zIndex: 9999,
-            }}>
-            Preview
-          </ButtonOutline>}
+        <Nav
+          showPreviewToggle={widthRatio < 1}
+          togglePreview={() => this.setState({preview: !preview})}
+          newProject={() => {
+            Meteor.call('newProject', {
+              createdAt: Date.now(),
+            }, (error, success) => {
+              success && this.props.history.push(`/${success}`);
+            });
+          }}/>
         <Canvas
           components={components}
           state={state}
@@ -87,21 +86,6 @@ class App extends Component {
               maxWidth={maxWidth}
               height={editorsHeight}
               top={editorsTop}/>
-            <Button
-              onClick={() => {
-                Meteor.call('newProject', {
-                  createdAt: Date.now(),
-                }, (error, success) => {
-                  success && this.props.history.push(`/${success}`);
-                });
-              }}
-              style={{
-                position: 'fixed',
-                bottom: 10,
-                right: 10,
-              }}>
-              New Project
-            </Button>
           </span>}
 
         <HotKey

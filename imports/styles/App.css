@@ -1,3 +1,12 @@
+:root {
+  --color-gray-dark: #282a36;
+  --color-gray-mid: #6D8A88;
+  --color-gray-light: #afc0bf;
+  --color-gray-lightest: #E9EBEE;
+  --color-accent: #0088ee;
+  --color-red: #FF4136;
+}
+
 :global * {
   box-sizing: border-box;
   margin: 0;
@@ -9,7 +18,8 @@
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 14px;
   line-height: 1.2;
-  background-color: #E9EBEE;
+  background-color: var(--color-gray-lightest);
+  color: var(--color-gray-dark);
 }
 
 :global .ReactTabs__TabList {
@@ -22,14 +32,14 @@
   flex: 0 0 auto;
   margin-right: 2em;
   display: inline-block;
-  color: #6D8A88;
+  color: var(--color-gray-mid);
   font-weight: bold;
   cursor: pointer;
   user-select: none;
 }
 
 :global .ReactTabs__Tab:hover {
-  color: #afc0bf;
+  color: var(--color-gray-light);
 }
 
 :global .ReactTabs__Tab--selected,

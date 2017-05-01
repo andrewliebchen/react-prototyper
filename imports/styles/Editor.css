@@ -25,6 +25,11 @@
   top: 1px;
 }
 
+.EditorErrorActive {
+  composes: EditorError;
+  color: var(--color-red);
+}
+
 .EditorDelete {
   cursor: pointer;
 }

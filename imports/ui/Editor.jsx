@@ -49,7 +49,7 @@ class Editor extends Component {
   }
 
   render() {
-    const { userCode } = this.state;
+    const { userCode, error } = this.state;
     const options = {
       lineNumbers: true,
       smartIndent: true,
@@ -72,9 +72,7 @@ class Editor extends Component {
               this.handleUpdate();
             }}/>
           <div className={styles.EditorActions}>
-            <Triangle up
-              className={styles.EditorError}
-              style={{color: this.state.error && '#FF4136'}}/>
+            <Triangle up className={error ? styles.EditorErrorActive : styles.EditorError}/>
             {this.props.canDelete &&
               <X
                 className={styles.EditorDelete}

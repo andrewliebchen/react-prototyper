@@ -1,0 +1,19 @@
+.Nav {
+  position: fixed;
+  top: 1em;
+  right: 1em;
+}
+
+.NavItem {
+  padding: 0.5em;
+  margin: 0 0 0.5em;
+  display: block;
+  border-radius: 30px;
+  cursor: pointer;
+  color: var(--color-gray-light);
+}
+
+.NavItem:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: var(--color-gray-dark);
+}
