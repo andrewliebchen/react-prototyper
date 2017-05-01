@@ -1,0 +1,44 @@
+:global * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:global html,
+:global body {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  line-height: 1.2;
+  background-color: #E9EBEE;
+}
+
+:global .ReactTabs__TabList {
+  list-style: none;
+  display: flex;
+  margin-bottom: 1em;
+}
+
+:global .ReactTabs__Tab {
+  flex: 0 0 auto;
+  margin-right: 2em;
+  display: inline-block;
+  color: #6D8A88;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+}
+
+:global .ReactTabs__Tab:hover {
+  color: #afc0bf;
+}
+
+:global .ReactTabs__Tab--selected,
+:global .ReactTabs__Tab--selected:hover {
+  color: white;
+}
+
+:global .CodeMirror {
+  margin: 0 !important;
+  height: auto !important;
+  font-size: 16px !important;
+}

@@ -5,6 +5,8 @@ import { Tooltip } from 'rebass';
 import classNames from 'classnames';
 import { X, Triangle } from 'reline';
 
+import styles from '../styles/Editor';
+
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/jsx/jsx';
@@ -60,25 +62,24 @@ class Editor extends Component {
     };
 
     return (
-      <div className={classNames({
-        'Editor': true,
-        'hasBorder': !this.props.noBorder,
-      })}>
-        <CodeMirror
-          value={userCode && userCode}
-          options={options}
-          onChange={(value) => {
-            this.setState({userCode: value});
-            this.handleUpdate();
-          }}/>
-        <div className="EditorActions">
-          <Triangle up
-            className="EditorError"
-            style={{color: this.state.error && '#FF4136'}}/>
-          {this.props.canDelete &&
-            <X
-              className="EditorDelete"
-              onClick={this.handleDelete.bind(this)}/>}
+      <div className={styles.Editor}>
+        <div className={!this.props.noBorder && styles.CodeMirrorWrapper}>
+          <CodeMirror
+            value={userCode && userCode}
+            options={options}
+            onChange={(value) => {
+              this.setState({userCode: value});
+              this.handleUpdate();
+            }}/>
+          <div className={styles.EditorActions}>
+            <Triangle up
+              className={styles.EditorError}
+              style={{color: this.state.error && '#FF4136'}}/>
+            {this.props.canDelete &&
+              <X
+                className={styles.EditorDelete}
+                onClick={this.handleDelete.bind(this)}/>}
+          </div>
         </div>
       </div>
     );

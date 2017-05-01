@@ -12,6 +12,8 @@ import { Projects } from '../api/projects';
 import Canvas from './Canvas';
 import Editors from './Editors';
 
+import styles from '../styles/Global.css';
+
 const maxWidth = 1200;
 
 class App extends Component {

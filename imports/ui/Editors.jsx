@@ -5,6 +5,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import Editor from './Editor';
 
+import styles from '../styles/Editors';
+
 Tabs.setUseDefaultStyles(false);
 
 // Want a drag handle, Canvas scroll under...
@@ -27,7 +29,7 @@ class Editors extends Component {
     } = this.props;
     return (
       <Tabs
-        className="Editors"
+        className={styles.Editors}
         style={{
           top: top,
           maxWidth: maxWidth,

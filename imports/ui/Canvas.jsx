@@ -8,6 +8,8 @@ import * as icon from 'reline';
 
 import { States } from '../api/states';
 
+import styles from '../styles/Canvas';
+
 class Canvas extends Component {
   _setState(newState) {
     Meteor.call('setState', {
@@ -25,7 +27,7 @@ class Canvas extends Component {
 
     return (
       <div
-        className="Canvas"
+        className={styles.Canvas}
         style={{
           transform: `scale(${canvasScale})`,
           transition: noTransition ? 'none' : '0.1s ease-in-out',
