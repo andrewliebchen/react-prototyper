@@ -38,8 +38,6 @@ class Editors extends Component {
         <TabList className="EditorsHeader">
           <Tab>Components</Tab>
           <Tab>State</Tab>
-          <Tab>Options</Tab>
-          <Tab style={{margin: '0 0 0 auto'}}>Andrew</Tab>
         </TabList>
         <TabPanel>
           {components.map((component) =>
@@ -64,8 +62,6 @@ class Editors extends Component {
             type="state"
             noBorder/>
         </TabPanel>
-        <TabPanel>Settings</TabPanel>
-        <TabPanel>Andrew</TabPanel>
       </Tabs>
     );
   }
