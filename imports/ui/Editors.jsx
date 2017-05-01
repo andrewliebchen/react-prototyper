@@ -15,12 +15,21 @@ class Editors extends Component {
   handleNewComponent() {
     Meteor.call('newComponent', {
       createdAt: Date.now(),
+      project: this.props.project._id,
+    });
+  }
+
+  handleNewStyle() {
+    Meteor.call('newStyle', {
+      createdAt: Date.now(),
+      project: this.props.project._id,
     });
   }
 
   render() {
     const {
       components,
+      prototypeStyles,
       state,
       canvasHeight,
       maxWidth,
@@ -37,6 +46,7 @@ class Editors extends Component {
         }}>
         <TabList className="EditorsHeader">
           <Tab>Components</Tab>
+          <Tab>Styles</Tab>
           <Tab>State</Tab>
         </TabList>
         <TabPanel>
@@ -48,12 +58,23 @@ class Editors extends Component {
               canDelete/>
           )}
           <Button
-            onClick={this.handleNewComponent}
-            style={{
-              display: 'block',
-              width: '100%'
-            }}>
+            onClick={this.handleNewComponent.bind(this)}
+            style={{display: 'block', width: '100%'}}>
             New component
+          </Button>
+        </TabPanel>
+        <TabPanel>
+          {prototypeStyles.map((style) =>
+            <Editor
+              key={style._id}
+              element={style}
+              type="style"
+              canDelete/>
+          )}
+          <Button
+            onClick={this.handleNewStyle.bind(this)}
+            style={{display: 'block', width: '100%'}}>
+            New style
           </Button>
         </TabPanel>
         <TabPanel>
@@ -69,7 +90,9 @@ class Editors extends Component {
 
 Editors.propTypes = {
   components: PropTypes.array,
+  prototypeStyles: PropTypes.array,
   state: PropTypes.object,
+  project: PropTypes.object,
   canvasHeight: PropTypes.number,
   maxWidth: PropTypes.number,
   height: PropTypes.number,

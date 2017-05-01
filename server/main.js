@@ -4,6 +4,7 @@ import React from 'react';
 
 import { Projects } from '../imports/api/projects';
 import { Components } from '../imports/api/components';
+import { Styles } from '../imports/api/styles';
 import { States } from '../imports/api/states';
 
 // TODO: For state, just use JSON.stringify to get the userValue, or use a GUI
@@ -18,6 +19,7 @@ Meteor.startup(() => {
 Meteor.publish('project', (projectId) => {
   return [
     Components.find({project: projectId}),
+    Styles.find({project: projectId}),
     States.find({project: projectId}),
     Projects.find({_id: projectId}),
   ];
@@ -70,6 +72,13 @@ Meteor.methods({
     });
   },
 
+  newStyle(args) {
+    return Styles.insert({
+      createdAt: args.createdAt,
+      project: args.project,
+    });
+  },
+
   setState(args) {
     let newState = JSON.parse(`{${args.userCode}}`);
     update = States.update(args.id, {
@@ -91,6 +100,15 @@ Meteor.methods({
           $set: {
             userCode: args.userCode,
             transformedCode: reactComponent,
+            updatedAt: args.updatedAt,
+          }
+        });
+        break;
+      case 'style':
+        update = Styles.update(args.id, {
+          $set: {
+            userCode: args.userCode,
+            transformedCode: args.userCode,
             updatedAt: args.updatedAt,
           }
         });

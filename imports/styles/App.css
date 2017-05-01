@@ -32,14 +32,14 @@
   flex: 0 0 auto;
   margin-right: 2em;
   display: inline-block;
-  color: var(--color-gray-mid);
+  color: rgba(255, 255, 255, 0.4);
   font-weight: bold;
   cursor: pointer;
   user-select: none;
 }
 
 :global .ReactTabs__Tab:hover {
-  color: var(--color-gray-light);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 :global .ReactTabs__Tab--selected,

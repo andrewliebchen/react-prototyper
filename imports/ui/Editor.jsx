@@ -10,6 +10,7 @@ import styles from '../styles/Editor';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/jsx/jsx';
+import 'codemirror/mode/css/css';
 import 'codemirror/theme/dracula';
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/edit/matchtags';
@@ -48,13 +49,26 @@ class Editor extends Component {
     }
   }
 
+  _defineMode() {
+    let mode;
+    switch (this.props.type) {
+      case 'component':
+        mode = 'jsx';
+      case 'style':
+        mode = 'css';
+      default:
+        mode = 'javascript';
+    }
+    return mode;
+  }
+
   render() {
     const { userCode, error } = this.state;
     const options = {
       lineNumbers: true,
       smartIndent: true,
       viewportMargin: Infinity,
-      mode: this.props.type === 'component' ? 'jsx' : 'javascript',
+      mode: this._defineMode(),
       theme: 'dracula',
       smartIndent: this.props.type === 'component' ? true : false,
       matchBrackets: true,
@@ -92,6 +106,7 @@ Editor.propTypes = {
   noBorder: PropTypes.bool,
   type: PropTypes.oneOf([
     'component',
+    'style',
     'state',
     'event',
   ]),

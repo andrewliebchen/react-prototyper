@@ -4,5 +4,5 @@
   width: 100vw;
   position: relative;
   transform-origin: center top;
-  z-index: 999;
+  z-index: 2;
 }

@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import ReactWindowResizeListener from 'window-resize-listener-react';
 import HotKey from 'react-shortcut';
+import { Overlay } from 'rebass';
 
 import { Components } from '../api/components';
+import { Styles } from '../api/styles';
 import { States } from '../api/states';
 import { Projects } from '../api/projects';
 
@@ -25,6 +27,7 @@ class App extends Component {
       editorsHeight: null,
       editorsTop: null,
       preview: null,
+      user: false,
     };
   }
 
@@ -49,22 +52,28 @@ class App extends Component {
   }
 
   render() {
-    const { components, state } = this.props;
+    const { components, prototypeStyles, state, project } = this.props;
     const {
       widthRatio,
       canvasHeight,
       preview,
       editorsHeight,
       editorsTop,
-      settings,
       user,
     } = this.state;
     return (
       <div className="App">
         <ReactWindowResizeListener onResize={this._resizeHandler}/>
+        <Overlay
+          box
+          open={user}
+          onDismiss={() => this.setState({user: false})}>
+          User info!
+        </Overlay>
         <Nav
           showPreviewToggle={widthRatio < 1}
           togglePreview={() => this.setState({preview: !preview})}
+          toggleUser={() => this.setState({user: !user})}
           newProject={() => {
             Meteor.call('newProject', {
               createdAt: Date.now(),
@@ -81,7 +90,9 @@ class App extends Component {
           <span>
             <Editors
               components={components}
+              prototypeStyles={prototypeStyles}
               state={state}
+              project={project}
               canvasHeight={canvasHeight}
               maxWidth={maxWidth}
               height={editorsHeight}
@@ -99,14 +110,17 @@ class App extends Component {
 
 App.propTypes = {
   components: PropTypes.array,
+  prototypeStyles: PropTypes.array,
+  state: PropTypes.object,
+  project: PropTypes.object,
 };
 
-// TODO: PUB/SUB!
 export default createContainer(({ match }) => {
   Meteor.subscribe('project', match.params._id);
   return {
     components: Components.find().fetch(),
+    prototypeStyles: Styles.find().fetch(),
     state: States.findOne(),
-    projects: Projects.findOne(),
+    project: Projects.findOne(),
   };
 }, App);

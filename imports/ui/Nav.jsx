@@ -20,7 +20,7 @@ const Nav = (props) =>
       <NavItem clickHandler={props.newProject}>
         <Plus size={20}/>
       </NavItem>
-      <NavItem>
+      <NavItem clickHandler={props.toggleUser}>
         <Burger size={20}/>
       </NavItem>
   </div>
@@ -29,6 +29,7 @@ Nav.propTypes = {
   showPreviewToggle: PropTypes.bool,
   togglePreview: PropTypes.func,
   newProject: PropTypes.func,
+  toggleUser: PropTypes.func,
 }
 
 export default Nav;
