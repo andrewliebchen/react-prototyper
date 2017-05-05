@@ -8,7 +8,7 @@ import * as icon from 'reline';
 
 import { States } from '../api/states';
 
-import styles from '../styles/Canvas';
+import canvasStyles from '../styles/Canvas';
 
 class Canvas extends Component {
   _setState(newState) {
@@ -20,14 +20,20 @@ class Canvas extends Component {
   }
 
   render() {
-    const { scale, preview, noTransition } = this.props;
+    const { prototypeStyles, scale, preview, noTransition } = this.props;
+    const styles = [];
     const state = this.props.state && this.props.state.transformedCode;
     const setState = (newState) => this._setState(newState);
     const canvasScale = scale < 1 && !preview ? scale : 1;
 
+    // Need a key/value pair for component...option dropdown in styles editor?
+    prototypeStyles.map((style) => {
+      styles.push(style.transformedCode);
+    });
+
     return (
       <div
-        className={styles.Canvas}
+        className={canvasStyles.Canvas}
         style={{
           transform: `scale(${canvasScale})`,
           transition: noTransition ? 'none' : '0.1s ease-in-out',
@@ -44,6 +50,7 @@ class Canvas extends Component {
 
 Canvas.propTypes = {
   components: PropTypes.array,
+  prototypeStyles: PropTypes.array,
   state: PropTypes.object,
   scale: PropTypes.number,
   preview: PropTypes.bool,

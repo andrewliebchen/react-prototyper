@@ -52,7 +52,6 @@ class App extends Component {
   }
 
   render() {
-    const { components, prototypeStyles, state, project } = this.props;
     const {
       widthRatio,
       canvasHeight,
@@ -81,23 +80,15 @@ class App extends Component {
               success && this.props.history.push(`/${success}`);
             });
           }}/>
-        <Canvas
-          components={components}
-          state={state}
-          scale={widthRatio}
-          preview={preview}/>
+
+        <Canvas scale={widthRatio} {...this.props}/>
+
         {!preview &&
-          <span>
-            <Editors
-              components={components}
-              prototypeStyles={prototypeStyles}
-              state={state}
-              project={project}
-              canvasHeight={canvasHeight}
-              maxWidth={maxWidth}
-              height={editorsHeight}
-              top={editorsTop}/>
-          </span>}
+          <Editors
+            height={editorsHeight}
+            top={editorsTop}
+            maxWidth={maxWidth}
+            {...this.props}/>}
 
         <HotKey
           keys={['escape']}
