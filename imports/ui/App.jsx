@@ -81,7 +81,10 @@ class App extends Component {
             });
           }}/>
 
-        <Canvas scale={widthRatio} {...this.props}/>
+        <Canvas
+          scale={widthRatio}
+          preview={preview}
+          {...this.props}/>
 
         {!preview &&
           <Editors
