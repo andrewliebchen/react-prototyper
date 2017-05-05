@@ -36,8 +36,7 @@ Meteor.publish('preview', (projectId) => {
 Meteor.methods({
   stateBootstrap(project) {
     States.insert({
-      userCode: '"modal": false',
-      transformedCode: { "modal": false },
+      code: {modal: false},
       createdAt: Date.now(),
       project: project,
     });
@@ -80,13 +79,11 @@ Meteor.methods({
   },
 
   setState(args) {
-    let newState = JSON.parse(`{${args.userCode}}`);
-    update = States.update(args.id, {
+    currentState = States.find(args.id).fetch()
+    States.update(args.id, {
       $set: {
-        userCode: args.userCode,
-        transformedCode: newState,
-        updatedAt: args.updatedAt,
-      }
+        'code.modal': args.newValue,
+      },
     });
   },
 
@@ -112,9 +109,6 @@ Meteor.methods({
             updatedAt: args.updatedAt,
           }
         });
-        break;
-      case 'state':
-        Meteor.call('setState', args);
         break;
     };
 

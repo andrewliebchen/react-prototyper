@@ -33,6 +33,7 @@
   "devDependencies": {
     "autoprefixer": "^6.7.7",
     "classnames": "^2.2.5",
+    "react-editable-json-tree": "^1.6.0",
     "react-geomicons": "^2.1.0",
     "react-interval": "^1.3.3",
     "react-router-dom": "^4.1.1",

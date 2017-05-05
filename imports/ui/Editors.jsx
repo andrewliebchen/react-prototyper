@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'rebass';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { JsonTree } from 'react-editable-json-tree';
 
 import Editor from './Editor';
 
@@ -24,6 +25,25 @@ class Editors extends Component {
       createdAt: Date.now(),
       project: this.props.project._id,
     });
+  }
+
+  handleStateChange(event) {
+    console.log(event);
+    // Move to the server?
+    switch(event.type) {
+      case 'UPDATE_DELTA_TYPE':
+        Meteor.call('setState', {
+          id: this.props.state._id,
+          key: event.key,
+          newValue: event.newValue,
+        });
+        break;
+      case 'ADD_DELTA_TYPE':
+        console.log('add');
+        break;
+      case 'REMOVE_DETLA_TYPE':
+        console.log('remove');
+    }
   }
 
   render() {
@@ -78,10 +98,10 @@ class Editors extends Component {
           </Button>
         </TabPanel>
         <TabPanel>
-          <Editor
-            element={state}
-            type="state"
-            noBorder/>
+            {state &&
+              <JsonTree
+                data={state.code}
+                onDeltaUpdate={this.handleStateChange.bind(this)}/>}
         </TabPanel>
       </Tabs>
     );

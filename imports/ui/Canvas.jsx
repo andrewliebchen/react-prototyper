@@ -22,14 +22,14 @@ class Canvas extends Component {
   render() {
     const { prototypeStyles, scale, preview, noTransition } = this.props;
     const styles = [];
-    const state = this.props.state && this.props.state.transformedCode;
+    const state = this.props.state && this.props.state.code;
     const setState = (newState) => this._setState(newState);
     const canvasScale = scale < 1 && !preview ? scale : 1;
 
     // Need a key/value pair for component...option dropdown in styles editor?
-    prototypeStyles.map((style) => {
-      styles.push(style.transformedCode);
-    });
+    // prototypeStyles.map((style) => {
+    //   styles.push(style.transformedCode);
+    // });
 
     return (
       <div
