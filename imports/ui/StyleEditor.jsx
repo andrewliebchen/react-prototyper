@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Select } from 'rebass';
+import trunc from 'trunc-text';
 
 import Editor from './Editor';
 
@@ -32,7 +33,7 @@ class StyleEditor extends Component {
     const options = [];
     this.props.components.map((component) => {
       options.push({
-        children: component.userCode,
+        children: trunc(component.userCode, 100),
         value: component._id,
       });
     });
