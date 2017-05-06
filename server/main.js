@@ -115,6 +115,7 @@ Meteor.methods({
             userCode: args.userCode,
             transformedCode: args.userCode,
             updatedAt: args.updatedAt,
+            component: args.component,
           }
         });
         break;

@@ -6,6 +6,7 @@ import { JsonTree } from 'react-editable-json-tree';
 import HotKey from 'react-shortcut';
 
 import Editor from './Editor';
+import StyleEditor from './StyleEditor';
 
 import styles from '../styles/Editors';
 
@@ -98,11 +99,10 @@ class Editors extends Component {
           </TabPanel>
           <TabPanel>
             {prototypeStyles.map((style) =>
-              <Editor
-                key={style._id}
-                element={style}
-                type="style"
-                canDelete/>
+              <StyleEditor
+                components={components}
+                style={style}
+                key={style._id}/>
             )}
             <Button
               onClick={this.handleNewStyle.bind(this)}

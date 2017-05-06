@@ -1,0 +1,9 @@
+.StyleEditor {
+  border: 1px solid black;
+  padding: 0.5em;
+  margin-bottom: 1em;
+}
+
+.StyleEditor .Editor {
+  margin-bottom: 0;
+}

@@ -33,6 +33,7 @@ class Editor extends Component {
         id: this.props.element._id,
         userCode: this.state.userCode,
         updatedAt: Date.now(),
+        component: this.props.component,
       }, (error, success) => {
         if (error) {
           this.setState({error: error.message});
@@ -111,6 +112,7 @@ Editor.propTypes = {
     'event',
   ]),
   canDelete: PropTypes.bool,
+  component: PropTypes.string,
 };
 
 export default Editor;
