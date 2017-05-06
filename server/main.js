@@ -78,12 +78,20 @@ Meteor.methods({
     });
   },
 
-  setState(args) {
-    currentState = States.find(args.id).fetch()
+  updateState(args) {
+    let setValue = {};
+    setValue[`code.${args.key}`] = args.newValue;
     States.update(args.id, {
-      $set: {
-        'code.modal': args.newValue,
-      },
+      $set: setValue,
+    });
+  },
+
+  removeState(args) {
+    let removeValue = {};
+    removeValue[`code.${args.key}`] = args.value;
+    console.log(removeValue);
+    States.update(args.id, {
+      $unset: removeValue,
     });
   },
 

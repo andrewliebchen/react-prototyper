@@ -27,22 +27,22 @@ class Editors extends Component {
     });
   }
 
-  handleStateChange(event) {
-    console.log(event);
+  handleUpdateState(event) {
     // Move to the server?
     switch(event.type) {
       case 'UPDATE_DELTA_TYPE':
-        Meteor.call('setState', {
+      case 'ADD_DELTA_TYPE':
+        Meteor.call('updateState', {
           id: this.props.state._id,
           key: event.key,
           newValue: event.newValue,
         });
-        break;
-      case 'ADD_DELTA_TYPE':
-        console.log('add');
-        break;
-      case 'REMOVE_DETLA_TYPE':
-        console.log('remove');
+      case 'REMOVE_DELTA_TYPE':
+        Meteor.call('removeState', {
+          id: this.props.state._id,
+          key: event.key,
+          value: event.value
+        });
     }
   }
 
@@ -101,7 +101,7 @@ class Editors extends Component {
             {state &&
               <JsonTree
                 data={state.code}
-                onDeltaUpdate={this.handleStateChange.bind(this)}/>}
+                onDeltaUpdate={this.handleUpdateState.bind(this)}/>}
         </TabPanel>
       </Tabs>
     );
