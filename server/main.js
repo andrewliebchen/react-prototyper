@@ -29,6 +29,7 @@ Meteor.publish('preview', (projectId) => {
   return [
     Components.find({project: projectId}),
     States.find({project: projectId}),
+    Styles.find({project: projectId}),
   ];
 });
 

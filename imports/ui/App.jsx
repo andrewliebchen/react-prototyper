@@ -116,5 +116,6 @@ export default createContainer(({ match }) => {
     prototypeStyles: Styles.find().fetch(),
     state: States.findOne(),
     project: Projects.findOne(),
+    styles: Styles.find().fetch()
   };
 }, App);

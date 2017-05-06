@@ -19,17 +19,27 @@ class Canvas extends Component {
     });
   }
 
+  _buildStyledComponent(component) {
+    let styledComponent;
+    const componentStyle = _.find(this.props.styles, { component: component._id });
+
+    if (componentStyle) {
+      styledComponent = component.transformedCode.replace(
+        'null,',
+        `{style: {${componentStyle.transformedCode}}}, null,`
+      );
+    } else {
+      styledComponent = component.transformedCode;
+    }
+
+    return styledComponent;
+  }
+
   render() {
     const { prototypeStyles, scale, preview, noTransition } = this.props;
-    const styles = [];
     const state = this.props.state && this.props.state.code;
     const setState = (newState) => this._setState(newState);
     const canvasScale = scale < 1 && !preview ? scale : 1;
-
-    // Need a key/value pair for component...option dropdown in styles editor?
-    // prototypeStyles.map((style) => {
-    //   styles.push(style.transformedCode);
-    // });
 
     return (
       <div
@@ -40,7 +50,7 @@ class Canvas extends Component {
         }}>
         {this.props.state && this.props.components.map((component) =>
           <span key={component._id}>
-            {eval(component.transformedCode)}
+            {eval(this._buildStyledComponent(component))}
           </span>
         )}
       </div>
@@ -55,6 +65,7 @@ Canvas.propTypes = {
   scale: PropTypes.number,
   preview: PropTypes.bool,
   noTransition: PropTypes.bool,
+  styles: PropTypes.array,
 };
 
 export default Canvas;
