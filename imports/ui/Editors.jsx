@@ -13,13 +13,6 @@ Tabs.setUseDefaultStyles(false);
 
 // Want a drag handle, Canvas scroll under...
 class Editors extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedTab: 0
-    };
-  }
-
   handleNewComponent() {
     Meteor.call('newComponent', {
       createdAt: Date.now(),
@@ -53,6 +46,10 @@ class Editors extends Component {
     }
   }
 
+  selectTab(tab) {
+    this.props.history.push(`#/${tab}`);
+  }
+
   render() {
     const {
       components,
@@ -61,13 +58,20 @@ class Editors extends Component {
       canvasHeight,
       maxWidth,
       height,
-      top
+      top,
     } = this.props;
+
+    let selectedTab = 0;
+    if (this.props.history.location.hash) {
+      selectedTab = this.props.history.location.hash.replace('#/', '');
+    }
+
     return (
       <span>
         <Tabs
           className={styles.Editors}
-          selectedIndex={this.state.selectedTab}
+          selectedIndex={parseInt(selectedTab)}
+          onSelect={(tab) => this.selectTab(tab)}
           style={{
             top: top,
             maxWidth: maxWidth,
@@ -117,15 +121,15 @@ class Editors extends Component {
         <HotKey
           keys={['control', '1']}
           simultaneous
-          onKeysCoincide={() => this.setState({selectedTab: 0})}/>
+          onKeysCoincide={this.selectTab.bind(this, 0)}/>
         <HotKey
           keys={['control', '2']}
           simultaneous
-          onKeysCoincide={() => this.setState({selectedTab: 1})}/>
+          onKeysCoincide={this.selectTab.bind(this, 1)}/>
         <HotKey
           keys={['control', '3']}
           simultaneous
-          onKeysCoincide={() => this.setState({selectedTab: 2})}/>
+          onKeysCoincide={this.selectTab.bind(this, 2)}/>
 
       </span>
     );
