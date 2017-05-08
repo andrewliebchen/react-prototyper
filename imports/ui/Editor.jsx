@@ -73,6 +73,7 @@ class Editor extends Component {
       smartIndent: this.props.type === 'component' ? true : false,
       matchBrackets: true,
       matchTags: true,
+      showCursorWhenSelecting: true,
     };
 
     return (

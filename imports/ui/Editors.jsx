@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import { Button } from 'rebass';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { JsonTree } from 'react-editable-json-tree';
 import HotKey from 'react-shortcut';
+import classnames from 'classnames';
 
 import Editor from './Editor';
 import StyleEditor from './StyleEditor';
+import Canvas from './Canvas';
 
 import styles from '../styles/Editors';
 
@@ -79,10 +82,31 @@ class Editors extends Component {
             minHeight: height,
           }}>
           <TabList className="EditorsHeader">
+            <Tab>Pages</Tab>
             <Tab>Components</Tab>
             <Tab>Styles</Tab>
             <Tab>State</Tab>
           </TabList>
+          <TabPanel>
+            <div className={styles.Pages}>
+              {_.times(4, (i) =>
+                <div
+                  key={i}
+                  className={classnames({
+                    [styles.PageWrapper]: true,
+                    [styles.PageActive]: i === 0,
+                  })}>
+                  <div className={styles.Page}>
+                    <Canvas {...this.props}/>
+                  </div>
+                </div>
+              )}
+            </div>
+            <Button
+              style={{display: 'block', width: '100%'}}>
+              New Page
+            </Button>
+          </TabPanel>
           <TabPanel>
             {components.map((component) =>
               <Editor
