@@ -20,6 +20,7 @@ class Editor extends Component {
     this.state = {
       userCode: this.props.element.userCode,
       error: false,
+      focused: false,
     };
     this.handleUpdate = this.handleUpdate.bind(this);
   }
@@ -62,10 +63,10 @@ class Editor extends Component {
   }
 
   render() {
-    const { userCode, error } = this.state;
+    const { userCode, error, focused } = this.state;
     const options = {
       lineNumbers: true,
-      smartIndent: true,
+      smartIndent: false,
       viewportMargin: Infinity,
       mode: this._defineMode(),
       theme: 'dracula',
@@ -76,14 +77,17 @@ class Editor extends Component {
 
     return (
       <div className={styles.Editor}>
-        <div className={styles.CodeMirrorWrapper}>
+        <div
+          className={styles.CodeMirrorWrapper}
+          style={{borderColor: focused && '#0088ee'}}>
           <CodeMirror
             value={userCode && userCode}
             options={options}
             onChange={(value) => {
               this.setState({userCode: value});
               this.handleUpdate();
-            }}/>
+            }}
+            onFocusChange={(focused) => this.setState({focused: focused})}/>
           <div className={styles.EditorActions}>
             <Triangle up className={error ? styles.EditorErrorActive : styles.EditorError}/>
             {this.props.canDelete &&
