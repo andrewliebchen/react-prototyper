@@ -1,9 +1,18 @@
 .StyleEditor {
-  border: 1px solid black;
-  padding: 0.5em;
   margin-bottom: 1em;
 }
 
-.StyleEditor .Editor {
-  margin-bottom: 0;
+
+.ComponentChooser {
+  margin-bottom: 0.25em;
+}
+
+.Action {
+  line-height: 32px;
+  color: black;
+  cursor: pointer;
+}
+
+.Action:hover {
+  color: white;
 }

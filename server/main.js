@@ -45,8 +45,15 @@ Meteor.methods({
 
   componentBootstrap(project) {
     Components.insert({
-      userCode: '<div>Hello world!</div>',
-      transformedCode: "React.createElement('div', null, 'Hello world!')",
+      userCode: '<div>You say goodbye</div>',
+      transformedCode: "React.createElement('div', null, 'You say goodbye')",
+      createdAt: Date.now(),
+      project: project,
+    });
+
+    Components.insert({
+      userCode: '<div>I say hello world!</div>',
+      transformedCode: "React.createElement('div', null, 'I say hello world!')",
       createdAt: Date.now(),
       project: project,
     });
@@ -73,9 +80,20 @@ Meteor.methods({
   },
 
   newStyle(args) {
+    const firstComponent = Components.find({project: args.project}).fetch()[0]._id;
     return Styles.insert({
       createdAt: args.createdAt,
       project: args.project,
+      component: firstComponent,
+    });
+  },
+
+  updateStyleComponent(args) {
+    Styles.update(args.id, {
+      $set: {
+        component: args.component,
+        updatedAt: args.updatedAt,
+      },
     });
   },
 
@@ -90,7 +108,6 @@ Meteor.methods({
   removeState(args) {
     let removeValue = {};
     removeValue[`code.${args.key}`] = args.value;
-    console.log(removeValue);
     States.update(args.id, {
       $unset: removeValue,
     });
@@ -98,7 +115,6 @@ Meteor.methods({
 
   updateElement(args) {
     let update;
-
     switch (args.type) {
       case 'component':
         let reactComponent = transform(args.userCode, {"presets": ["react"]}).code;
@@ -111,13 +127,14 @@ Meteor.methods({
         });
         break;
       case 'style':
+        console.log(args);
         update = Styles.update(args.id, {
           $set: {
+            component: args.component,
             userCode: args.userCode,
             transformedCode: args.userCode,
             updatedAt: args.updatedAt,
-            component: args.component,
-          }
+          },
         });
         break;
     };
@@ -125,7 +142,16 @@ Meteor.methods({
     return update;
   },
 
-  deleteComponent(id) {
-    Components.remove(id);
+  deleteElement(args) {
+    let remove;
+    switch (args.type) {
+      case 'component':
+        Components.remove(args.id);
+        break;
+      case 'style':
+        Styles.remove(args.id);
+        break;
+    }
+    return remove;
   },
 });

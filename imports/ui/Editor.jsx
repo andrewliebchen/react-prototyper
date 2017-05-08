@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CodeMirror from 'react-codemirror';
 import { Tooltip } from 'rebass';
-import classNames from 'classnames';
 import { X, Triangle } from 'reline';
 
 import styles from '../styles/Editor';
@@ -20,7 +19,7 @@ class Editor extends Component {
     super(props);
     this.state = {
       userCode: this.props.element.userCode,
-      error: null,
+      error: false,
     };
     this.handleUpdate = this.handleUpdate.bind(this);
   }
@@ -35,18 +34,17 @@ class Editor extends Component {
         updatedAt: Date.now(),
         component: this.props.component,
       }, (error, success) => {
-        if (error) {
-          this.setState({error: error.message});
-        } else {
-          this.setState({error: null});
-        }
+        this.setState({error: error});
       });
     }
   }
 
   handleDelete() {
     if (window.confirm('Sure you want to do that?')) {
-      Meteor.call('deleteComponent', this.props.element._id);
+      Meteor.call('deleteElement', {
+        id: this.props.element._id,
+        type: this.props.type,
+      });
     }
   }
 
@@ -78,7 +76,7 @@ class Editor extends Component {
 
     return (
       <div className={styles.Editor}>
-        <div className={!this.props.noBorder && styles.CodeMirrorWrapper}>
+        <div className={styles.CodeMirrorWrapper}>
           <CodeMirror
             value={userCode && userCode}
             options={options}
@@ -104,12 +102,10 @@ Editor.propTypes = {
     PropTypes.array,
     PropTypes.object,
   ]),
-  noBorder: PropTypes.bool,
   type: PropTypes.oneOf([
     'component',
     'style',
     'state',
-    'event',
   ]),
   canDelete: PropTypes.bool,
   component: PropTypes.string,

@@ -19,10 +19,10 @@ class Canvas extends Component {
     });
   }
 
-  _buildStyledComponent(component) {
+  _buildStyledComponent(styles, component) {
     let styledComponent;
-    const componentStyle = _.find(this.props.styles, { component: component._id });
-
+    const componentStyle = _.find(styles, {component: component._id});
+    console.log(componentStyle);
     if (componentStyle) {
       styledComponent = component.transformedCode.replace(
         'null,',
@@ -31,16 +31,21 @@ class Canvas extends Component {
     } else {
       styledComponent = component.transformedCode;
     }
-
-    return styledComponent;
+    console.log(styledComponent);
+    return eval(styledComponent);
   }
 
   render() {
-    const { prototypeStyles, scale, preview, noTransition } = this.props;
+    const {
+      components,
+      prototypeStyles,
+      scale,
+      preview,
+      noTransition
+    } = this.props;
     const state = this.props.state && this.props.state.code;
     const setState = (newState) => this._setState(newState);
     const canvasScale = scale < 1 && !preview ? scale : 1;
-
     return (
       <div
         className={canvasStyles.Canvas}
@@ -48,9 +53,9 @@ class Canvas extends Component {
           transform: `scale(${canvasScale})`,
           transition: noTransition ? 'none' : '0.1s ease-in-out',
         }}>
-        {this.props.state && this.props.components.map((component) =>
+        {this.props.state && components.map((component) =>
           <span key={component._id}>
-            {eval(this._buildStyledComponent(component))}
+            {this._buildStyledComponent(prototypeStyles, component)}
           </span>
         )}
       </div>
