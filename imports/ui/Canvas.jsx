@@ -22,7 +22,7 @@ class Canvas extends Component {
   _buildStyledComponent(styles, component) {
     let styledComponent;
     const componentStyle = _.find(styles, {component: component._id});
-    console.log(componentStyle);
+
     if (componentStyle) {
       styledComponent = component.transformedCode.replace(
         'null,',
@@ -31,7 +31,7 @@ class Canvas extends Component {
     } else {
       styledComponent = component.transformedCode;
     }
-    console.log(styledComponent);
+
     return eval(styledComponent);
   }
 

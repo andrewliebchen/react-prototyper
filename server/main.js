@@ -67,8 +67,6 @@ Meteor.methods({
     Meteor.call('componentBootstrap', bootstrapProject);
     Meteor.call('stateBootstrap', bootstrapProject);
 
-    console.log(bootstrapProject);
-
     return bootstrapProject;
   },
 

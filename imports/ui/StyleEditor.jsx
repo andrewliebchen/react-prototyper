@@ -30,7 +30,6 @@ const StyleEditor = (props) => {
             options={options}
             style={{marginBottom: 0}}
             onChange={(event) => {
-              console.log(event.target.value);
               Meteor.call('updateStyleComponent', {
                 id: props.style._id,
                 component: event.target.value,
@@ -45,8 +44,6 @@ const StyleEditor = (props) => {
           <Minus/>
         </Box>
       </Flex>
-
-      {console.log(props.style.component)}
 
       <Editor
         element={props.style}
