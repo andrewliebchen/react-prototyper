@@ -16,6 +16,23 @@ Tabs.setUseDefaultStyles(false);
 
 // Want a drag handle, Canvas scroll under...
 class Editors extends Component {
+  handleNewPage() {
+    Meteor.call('newPage', {
+      createdAt: Date.now(),
+      project: this.props.project._id,
+    });
+  }
+
+  handlePageDelete(page) {
+    const pageCount = this.props.pages && this.props.pages.length;
+    if (pageCount > 1 && window.confirm('Sure you want to do that?')) {
+      Meteor.call('deleteElement', {
+        id: page._id,
+        type: 'page',
+      });
+    }
+  }
+
   handleNewComponent() {
     Meteor.call('newComponent', {
       createdAt: Date.now(),
@@ -88,17 +105,18 @@ class Editors extends Component {
           </TabList>
           <TabPanel>
             <div className={styles.Pages}>
-              {_.times(4, (i) =>
+              {this.props.pages.map((page) =>
                 <Element
-                  key={i}
-                  active={i === 0}
+                  key={page._id}
+                  handleDelete={this.handlePageDelete.bind(this, page)}
                   canDelete
                   style={{cursor: 'pointer'}}>
-                  Page {i}
+                  {page.name}
                 </Element>
               )}
             </div>
             <Button
+              onClick={this.handleNewPage.bind(this)}
               style={{display: 'block', width: '100%'}}>
               New Page
             </Button>
@@ -157,6 +175,7 @@ class Editors extends Component {
 }
 
 Editors.propTypes = {
+  page: PropTypes.array,
   components: PropTypes.array,
   prototypeStyles: PropTypes.array,
   state: PropTypes.object,

@@ -3,6 +3,7 @@ import { transform } from 'babel-core';
 import React from 'react';
 
 import { Projects } from '../imports/api/projects';
+import { Pages } from '../imports/api/pages';
 import { Components } from '../imports/api/components';
 import { Styles } from '../imports/api/styles';
 import { States } from '../imports/api/states';
@@ -18,15 +19,17 @@ Meteor.startup(() => {
 // Publications
 Meteor.publish('project', (projectId) => {
   return [
+    Projects.find({_id: projectId}),
+    Pages.find({project: projectId}),
     Components.find({project: projectId}),
     Styles.find({project: projectId}),
     States.find({project: projectId}),
-    Projects.find({_id: projectId}),
   ];
 });
 
 Meteor.publish('preview', (projectId) => {
   return [
+    Pages.find({project: projectId}),
     Components.find({project: projectId}),
     States.find({project: projectId}),
     Styles.find({project: projectId}),
@@ -35,6 +38,14 @@ Meteor.publish('preview', (projectId) => {
 
 // Methods
 Meteor.methods({
+  pageBootstrap(project) {
+    Pages.insert({
+      name: 'Page One',
+      createdAt: Date.now(),
+      project: project,
+    });
+  },
+
   stateBootstrap(project) {
     States.insert({
       code: {modal: false},
@@ -64,12 +75,21 @@ Meteor.methods({
       createdAt: args.createdAt,
     });
 
+    Meteor.call('pageBootstrap', bootstrapProject);
     Meteor.call('componentBootstrap', bootstrapProject);
     Meteor.call('stateBootstrap', bootstrapProject);
 
     console.log(bootstrapProject);
 
     return bootstrapProject;
+  },
+
+  newPage(args) {
+    return Pages.insert({
+      createdAt: args.createdAt,
+      project: args.project,
+      name: `New page ${Pages.find({project: args.project}).count() + 1}`,
+    });
   },
 
   newComponent(args) {
@@ -141,6 +161,15 @@ Meteor.methods({
     return update;
   },
 
+  updatePage(args) {
+    Pages.update(args.id, {
+      $set: {
+        name: args.name,
+        updatedAt: args.updatedAt,
+      },
+    });
+  },
+
   deleteElement(args) {
     let remove;
     switch (args.type) {
@@ -149,6 +178,9 @@ Meteor.methods({
         break;
       case 'style':
         Styles.remove(args.id);
+        break;
+      case 'page':
+        Pages.remove(args.id);
         break;
     }
     return remove;

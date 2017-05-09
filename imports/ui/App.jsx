@@ -5,6 +5,7 @@ import ReactWindowResizeListener from 'window-resize-listener-react';
 import HotKey from 'react-shortcut';
 import { Overlay } from 'rebass';
 
+import { Pages } from '../api/pages';
 import { Components } from '../api/components';
 import { Styles } from '../api/styles';
 import { States } from '../api/states';
@@ -103,6 +104,7 @@ class App extends Component {
 
 
 App.propTypes = {
+  pages: PropTypes.array,
   components: PropTypes.array,
   prototypeStyles: PropTypes.array,
   state: PropTypes.object,
@@ -112,6 +114,7 @@ App.propTypes = {
 export default createContainer(({ match }) => {
   Meteor.subscribe('project', match.params._id);
   return {
+    pages: Pages.find().fetch(),
     components: Components.find().fetch(),
     prototypeStyles: Styles.find().fetch(),
     state: States.findOne(),
