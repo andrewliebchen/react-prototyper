@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CodeMirror from 'react-codemirror';
-import { Tooltip } from 'rebass';
-import { X, Triangle } from 'reline';
+
+import Element from './Element';
 
 import styles from '../styles/Editor';
 
@@ -18,7 +18,7 @@ class Editor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userCode: this.props.element.userCode,
+      userCode: this.props.element && this.props.element.userCode,
       error: false,
       focused: false,
     };
@@ -77,10 +77,11 @@ class Editor extends Component {
     };
 
     return (
-      <div className={styles.Editor}>
-        <div
-          className={styles.CodeMirrorWrapper}
-          style={{borderColor: focused && '#0088ee'}}>
+      <Element
+        handleDelete={this.handleDelete.bind(this)}
+        active={focused}
+        canDelete>
+        <div className={styles.CodeMirrorWrapper}>
           <CodeMirror
             value={userCode && userCode}
             options={options}
@@ -89,15 +90,8 @@ class Editor extends Component {
               this.handleUpdate();
             }}
             onFocusChange={(focused) => this.setState({focused: focused})}/>
-          <div className={styles.EditorActions}>
-            <Triangle up className={error ? styles.EditorErrorActive : styles.EditorError}/>
-            {this.props.canDelete &&
-              <X
-                className={styles.EditorDelete}
-                onClick={this.handleDelete.bind(this)}/>}
-          </div>
         </div>
-      </div>
+      </Element>
     );
   }
 }

@@ -9,30 +9,10 @@
 }
 
 .Pages {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  margin-top: 2em;
-}
-
-.PageWrapper {
-  display: inline-block;
-  height: 25vh;
-  width: 25vw;
-  margin-bottom: 2em;
-  cursor: pointer;
-}
-
-.PageWrapper:hover {
-  box-shadow: 0 0 0 3px var(--color-gray-dark), 0 0 0 5px var(--color-accent);
-}
-
-.PageActive,
-.PageActive:hover {
-  box-shadow: 0 0 0 3px var(--color-gray-dark), 0 0 0 7px var(--color-accent);
 }
 
 .Page {
-  transform-origin: 0 0;
-  transform: scale(0.25);
+  padding: 1em;
+  margin-bottom: 1em;
+  border: 1px solid black;
 }

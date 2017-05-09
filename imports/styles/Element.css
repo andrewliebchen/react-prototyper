@@ -1,0 +1,41 @@
+.Element {
+  position: relative;
+  margin-bottom: 1em;
+  border: 1px solid black;
+  padding: 1em;
+}
+
+.ElementActive {
+  border-color: var(--color-accent);
+}
+
+.ElementActions {
+  position: absolute;
+  right: 1em;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 99;
+}
+
+.ElementActions > * {
+  color: black;
+  margin-left: 0.5em;
+}
+
+.ElementError {
+  position: relative;
+  top: 1px;
+}
+
+.ElementErrorActive {
+  composes: ElementError;
+  color: var(--color-red);
+}
+
+.ElementDelete {
+  cursor: pointer;
+}
+
+.ElementDelete:hover {
+  color: white;
+}

@@ -5,11 +5,10 @@ import { Button } from 'rebass';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { JsonTree } from 'react-editable-json-tree';
 import HotKey from 'react-shortcut';
-import classnames from 'classnames';
 
 import Editor from './Editor';
 import StyleEditor from './StyleEditor';
-import Canvas from './Canvas';
+import Element from './Element';
 
 import styles from '../styles/Editors';
 
@@ -90,16 +89,13 @@ class Editors extends Component {
           <TabPanel>
             <div className={styles.Pages}>
               {_.times(4, (i) =>
-                <div
+                <Element
                   key={i}
-                  className={classnames({
-                    [styles.PageWrapper]: true,
-                    [styles.PageActive]: i === 0,
-                  })}>
-                  <div className={styles.Page}>
-                    <Canvas {...this.props}/>
-                  </div>
-                </div>
+                  active={i === 0}
+                  canDelete
+                  style={{cursor: 'pointer'}}>
+                  Page {i}
+                </Element>
               )}
             </div>
             <Button

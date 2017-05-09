@@ -67,6 +67,8 @@ Meteor.methods({
     Meteor.call('componentBootstrap', bootstrapProject);
     Meteor.call('stateBootstrap', bootstrapProject);
 
+    console.log(bootstrapProject);
+
     return bootstrapProject;
   },
 
@@ -125,7 +127,6 @@ Meteor.methods({
         });
         break;
       case 'style':
-        console.log(args);
         update = Styles.update(args.id, {
           $set: {
             component: args.component,
