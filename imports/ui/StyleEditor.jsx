@@ -47,7 +47,7 @@ const StyleEditor = (props) => {
 
       <Editor
         element={props.style}
-        component={props.style.component}
+        parentComponent={props.style.component}
         type="style"
         canDelete />
     </div>

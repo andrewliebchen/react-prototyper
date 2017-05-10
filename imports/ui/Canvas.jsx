@@ -2,37 +2,30 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
-
+import ReactKeymaster from 'react-keymaster';
 import * as ui from 'rebass';
 import * as icon from 'reline';
+
+import CanvasComponent from './CanvasComponent';
 
 import { States } from '../api/states';
 
 import canvasStyles from '../styles/Canvas';
 
 class Canvas extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      option: false,
+    };
+  }
+
   _setState(newState) {
     Meteor.call('setState', {
       id: this.props.state._id,
       userCode: newState,
       updatedAt: Date.now(),
     });
-  }
-
-  _buildStyledComponent(styles, component) {
-    let styledComponent;
-    const componentStyle = _.find(styles, {component: component._id});
-
-    if (componentStyle) {
-      styledComponent = component.transformedCode.replace(
-        'null,',
-        `{style: {${componentStyle.transformedCode}}}, null,`
-      );
-    } else {
-      styledComponent = component.transformedCode;
-    }
-
-    return eval(styledComponent);
   }
 
   render() {
@@ -46,6 +39,7 @@ class Canvas extends Component {
     const state = this.props.state && this.props.state.code;
     const setState = (newState) => this._setState(newState);
     const canvasScale = scale < 1 && !preview ? scale : 1;
+
     return (
       <div
         className={canvasStyles.Canvas}
@@ -54,10 +48,17 @@ class Canvas extends Component {
           transition: noTransition ? 'none' : '0.1s ease-in-out',
         }}>
         {this.props.state && components.map((component) =>
-          <span key={component._id}>
-            {this._buildStyledComponent(prototypeStyles, component)}
-          </span>
+          <CanvasComponent
+            key={component._id}
+            component={component}
+            prototypeStyles={prototypeStyles}
+            option={this.state.option}/>
         )}
+
+        <ReactKeymaster
+          keyName="option"
+          onKeyDown={() => this.setState({option: true})}
+          onKeyUp={() => this.setState({option: false})}/>
       </div>
     );
   }

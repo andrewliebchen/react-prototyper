@@ -1,0 +1,8 @@
+.EditorWrapper {
+  position: absolute;
+  width: 600px;
+  padding: 1em 1em 0;
+  margin: 1em;
+  background-color: var(--color-gray-dark);
+  border-radius: 3px;
+}

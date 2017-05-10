@@ -33,7 +33,7 @@ class Editor extends Component {
         id: this.props.element._id,
         userCode: this.state.userCode,
         updatedAt: Date.now(),
-        component: this.props.component,
+        component: this.props.parentComponent,
       }, (error, success) => {
         this.setState({error: error});
       });
@@ -97,7 +97,7 @@ class Editor extends Component {
 }
 
 Editor.propTypes = {
-  element: PropTypes.PropTypes.oneOfType([
+  element: PropTypes.oneOfType([
     PropTypes.array,
     PropTypes.object,
   ]),
@@ -107,7 +107,7 @@ Editor.propTypes = {
     'state',
   ]),
   canDelete: PropTypes.bool,
-  component: PropTypes.string,
+  parentComponent: PropTypes.string,
 };
 
 export default Editor;
