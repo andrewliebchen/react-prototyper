@@ -5,6 +5,8 @@
   --color-gray-lightest: #E9EBEE;
   --color-accent: #0088ee;
   --color-red: #FF4136;
+
+  --height-handle: 0.75em;
 }
 
 :global * {

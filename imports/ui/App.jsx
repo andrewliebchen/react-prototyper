@@ -4,6 +4,8 @@ import { createContainer } from 'meteor/react-meteor-data';
 import ReactWindowResizeListener from 'window-resize-listener-react';
 import HotKey from 'react-shortcut';
 import { Overlay } from 'rebass';
+import Draggable from 'react-draggable';
+import classnames from 'classnames';
 
 import { Pages } from '../api/pages';
 import { Components } from '../api/components';
@@ -14,6 +16,7 @@ import { Projects } from '../api/projects';
 import Nav from './Nav';
 import Canvas from './Canvas';
 import Editors from './Editors';
+import Handle from './Handle';
 
 import styles from '../styles/App.css';
 
@@ -88,11 +91,25 @@ class App extends Component {
           {...this.props}/>
 
         {!preview &&
-          <Editors
-            height={editorsHeight}
-            top={editorsTop}
-            maxWidth={maxWidth}
-            {...this.props}/>}
+          <Draggable
+            axis="y"
+            handle="#handle"
+            onDrag={(e) => this.setState({
+              editorsTop: e.clientY < canvasHeight ? e.clientY : editorsTop,
+              editorsHeight: window.innerHeight - e.clientY - 10.5, // 10.5 is the height of the handle
+            })}>
+            <span>
+              {!preview &&
+                <Handle
+                  top={editorsTop}
+                  maxWidth={maxWidth}/>}
+              <Editors
+                height={editorsHeight}
+                top={editorsTop}
+                maxWidth={maxWidth}
+                {...this.props}/>
+            </span>
+          </Draggable>}
 
         <HotKey
           keys={['escape']}
